@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MyActivity">
+
+    <item
+        android:id="@+id/action_zoom_in"
+        android:orderInCategory="100"
+        android:title="Zoom in"
+        android:icon="@mipmap/ic_zoom_in"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_zoom_out"
+        android:orderInCategory="100"
+        android:title="Zoom out"
+        android:icon="@mipmap/ic_zoom_out"
+        app:showAsAction="ifRoom"/>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_day_view"
+            android:orderInCategory="100"
+            android:title="Day View"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_three_day_view"
+            android:checked="true"
+            android:orderInCategory="100"
+            android:title="3 Days View"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_week_view"
+            android:orderInCategory="100"
+            android:title="Week View"
+            app:showAsAction="never" />
+    </group>
+</menu>
