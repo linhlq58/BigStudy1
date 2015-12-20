@@ -1,6 +1,5 @@
 package com.bigbirds.bigstudy1;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +16,8 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 
 import com.alamkanak.weekview.WeekView;
+import com.bigbirds.bigstudy1.fragments.ContentFragment;
+import com.bigbirds.bigstudy1.objects.ItemMenu;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Spinner;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private ListView listView;
-    private ListViewAdapter adapter;
+    private ListMenuAdapter adapter;
     private ArrayList<ItemMenu> itemMenus;
 
     private FloatingActionButton floatingActionButton;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.menu_list);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_image);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, new ContentFragment());
+        transaction.addToBackStack("ft");
         transaction.commit();
+
     }
 
     private void showMyDialog(int id) {
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         setListViewData();
         setListViewHeader();
 
-        adapter = new ListViewAdapter(this, R.layout.item_listview, itemMenus);
+        adapter = new ListMenuAdapter(this, R.layout.item_menu, itemMenus);
         listView.setAdapter(adapter);
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,

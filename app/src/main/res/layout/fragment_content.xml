@@ -37,9 +37,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="false">
 
             <TextView
+                android:id="@+id/click_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
@@ -66,7 +68,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="false">
 
             <TextView
                 android:layout_width="match_parent"

@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/libs" />
             <option value="$PROJECT_DIR$/libs/Android-Week-View-develop" />
+            <option value="$PROJECT_DIR$/libs/PagerSlidingTabStrip" />
             <option value="$PROJECT_DIR$/libs/material-master" />
           </set>
         </option>

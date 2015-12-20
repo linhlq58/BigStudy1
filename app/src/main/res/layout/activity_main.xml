@@ -42,7 +42,7 @@
             android:layout_gravity="left|start">
 
             <ListView
-                android:id="@+id/list"
+                android:id="@+id/menu_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@android:color/transparent"

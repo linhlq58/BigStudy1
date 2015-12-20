@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/libs/Android-Week-View-develop/Android-Week-View-develop.iml" filepath="$PROJECT_DIR$/libs/Android-Week-View-develop/Android-Week-View-develop.iml" />
       <module fileurl="file://$PROJECT_DIR$/BigStudy1.iml" filepath="$PROJECT_DIR$/BigStudy1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/PagerSlidingTabStrip/PagerSlidingTabStrip.iml" filepath="$PROJECT_DIR$/libs/PagerSlidingTabStrip/PagerSlidingTabStrip.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/libs.iml" filepath="$PROJECT_DIR$/libs/libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/material-master/material-master.iml" filepath="$PROJECT_DIR$/libs/material-master/material-master.iml" />

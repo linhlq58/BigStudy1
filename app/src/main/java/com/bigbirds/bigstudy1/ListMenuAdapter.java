@@ -1,23 +1,26 @@
 package com.bigbirds.bigstudy1;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bigbirds.bigstudy1.objects.ItemMenu;
+
 import java.util.ArrayList;
 
 /**
  * Created by Admin on 09/12/2015.
  */
-public class ListViewAdapter extends BaseAdapter {
+public class ListMenuAdapter extends BaseAdapter {
 
     private MainActivity context;
     private int layout;
     private ArrayList<ItemMenu> arrayList;
 
-    public ListViewAdapter(MainActivity context, int layout, ArrayList<ItemMenu> arrayList) {
+    public ListMenuAdapter(MainActivity context, int layout, ArrayList<ItemMenu> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
