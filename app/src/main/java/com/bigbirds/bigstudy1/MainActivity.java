@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Dialog mDialog;
 
-    private Spinner spinner1, spinner2;
+    private Spinner spinner1, spinner2, documentSpinner;
 
     private WeekView mWeekView;
 
@@ -66,13 +66,16 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.addSubject:
-                                showMyDialog(R.layout.add_subject);
+                                showSubjectDialog();
                                 return true;
                             case R.id.addNote:
-                                showMyDialog(R.layout.add_note);
+                                showNoteDialog();
                                 return true;
                             case R.id.addTask:
                                 showTaskDialog();
+                                return true;
+                            case R.id.addDocument:
+                                showDocumentDialog();
                                 return true;
                             default:
                                 return false;
@@ -97,14 +100,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showMyDialog(int id) {
+    private void showNoteDialog() {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        mDialog.setContentView(id);
+        mDialog.setContentView(R.layout.add_note);
 
-        Button saveButton = (Button) mDialog.findViewById(R.id.save_button);
-        Button cancelButton = (Button) mDialog.findViewById(R.id.cancel_button);
+        Button saveButton = (Button) mDialog.findViewById(R.id.note_save_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.note_cancel_button);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+
+
+        mDialog.setCancelable(false);
+
+        mDialog.show();
+    }
+
+    private void showSubjectDialog() {
+        mDialog = new Dialog(MainActivity.this);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mDialog.setContentView(R.layout.add_subject);
+
+        Button saveButton = (Button) mDialog.findViewById(R.id.subject_save_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.subject_cancel_button);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,14 +150,40 @@ public class MainActivity extends AppCompatActivity {
 
         mDialog.setContentView(R.layout.add_task);
 
-        Button saveButton = (Button) mDialog.findViewById(R.id.save_button);
-        Button cancelButton = (Button) mDialog.findViewById(R.id.cancel_button);
+        Button saveButton = (Button) mDialog.findViewById(R.id.task_save_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.task_cancel_button);
 
         spinner1 = (Spinner) mDialog.findViewById(R.id.spinner1);
         spinner2 = (Spinner) mDialog.findViewById(R.id.spinner2);
 
         initSpinner1();
         initSpinner2();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+
+
+        mDialog.setCancelable(false);
+
+        mDialog.show();
+    }
+
+    private void showDocumentDialog() {
+        mDialog = new Dialog(MainActivity.this);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mDialog.setContentView(R.layout.add_document);
+
+        Button saveButton = (Button) mDialog.findViewById(R.id.document_save_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.document_cancel_button);
+
+        documentSpinner = (Spinner) mDialog.findViewById(R.id.document_spinner);
+
+        initDocumentSpinner();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +224,21 @@ public class MainActivity extends AppCompatActivity {
         spinner2.setAdapter(spinnerAdapter);
 
         spinner2.setSelection(0);
+
+    }
+
+    private void initDocumentSpinner() {
+        String spinnerArr[] = {"<None>", "Giải tích 2", "Lập trình nâng cao",
+                "Đại số", "Tối ưu hóa"};
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        documentSpinner.setAdapter(spinnerAdapter);
+
+        documentSpinner.setSelection(0);
 
     }
 

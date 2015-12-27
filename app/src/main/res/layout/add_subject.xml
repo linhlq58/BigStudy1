@@ -85,7 +85,7 @@
         android:orientation="horizontal">
 
         <com.rey.material.widget.Button
-            android:id="@+id/save_button"
+            android:id="@+id/subject_save_button"
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             app:rd_enable="true" />
 
         <com.rey.material.widget.Button
-            android:id="@+id/cancel_button"
+            android:id="@+id/subject_cancel_button"
             style="@style/Material.Drawable.Ripple.Wave.Light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

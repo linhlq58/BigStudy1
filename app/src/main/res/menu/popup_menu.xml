@@ -9,4 +9,7 @@
     <item
         android:id="@+id/addTask"
         android:title="Thêm nhiệm vụ"/>
+    <item
+        android:id="@+id/addDocument"
+        android:title="Thêm tài liệu"/>
 </menu>
