@@ -10,19 +10,19 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemTask;
+import com.bigbirds.bigstudy1.objects.ItemDocument;
 
 import java.util.ArrayList;
 
 /**
  * Created by Admin on 27/12/2015.
  */
-public class ListTaskAdapter extends BaseAdapter {
+public class ListDocumentAdapter extends BaseAdapter {
     private Activity context;
     private int layout;
-    private ArrayList<ItemTask> arrayList;
+    private ArrayList<ItemDocument> arrayList;
 
-    public ListTaskAdapter(Activity context, int layout, ArrayList<ItemTask> arrayList) {
+    public ListDocumentAdapter(Activity context, int layout, ArrayList<ItemDocument> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
@@ -49,23 +49,25 @@ public class ListTaskAdapter extends BaseAdapter {
             convertView = context.getLayoutInflater().inflate(layout, parent, false);
         }
 
-        TextView content = (TextView) convertView.findViewById(R.id.task_content);
+        final TextView content = (TextView) convertView.findViewById(R.id.document_content);
 
         content.setText(arrayList.get(position).getContent());
 
-        final ImageView btnArrow = (ImageView) convertView.findViewById(R.id.btn_arrow2);
+        final ImageView btnArrow = (ImageView) convertView.findViewById(R.id.btn_arrow3);
         btnArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu taskMenu = new PopupMenu(context, btnArrow);
-                taskMenu.getMenuInflater().inflate(R.menu.note_task_menu, taskMenu.getMenu());
-                taskMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                PopupMenu noteMenu = new PopupMenu(context, btnArrow);
+                noteMenu.getMenuInflater().inflate(R.menu.document_menu, noteMenu.getMenu());
+                noteMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.note_edit:
+                            case R.id.document_edit:
                                 return true;
-                            case R.id.note_delete:
+                            case R.id.document_delete:
+                                return true;
+                            case R.id.document_share:
                                 return true;
                             default:
                                 return false;
@@ -73,7 +75,7 @@ public class ListTaskAdapter extends BaseAdapter {
                     }
                 });
 
-                taskMenu.show();
+                noteMenu.show();
             }
         });
 

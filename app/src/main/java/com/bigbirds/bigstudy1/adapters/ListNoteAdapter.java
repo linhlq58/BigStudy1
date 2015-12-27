@@ -10,7 +10,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemMenu;
 import com.bigbirds.bigstudy1.objects.ItemNote;
 
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class ListNoteAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 PopupMenu noteMenu = new PopupMenu(context, btnArrow);
-                noteMenu.getMenuInflater().inflate(R.menu.note_menu, noteMenu.getMenu());
+                noteMenu.getMenuInflater().inflate(R.menu.note_task_menu, noteMenu.getMenu());
                 noteMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
