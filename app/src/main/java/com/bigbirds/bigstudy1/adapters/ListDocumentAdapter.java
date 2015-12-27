@@ -1,9 +1,11 @@
 package com.bigbirds.bigstudy1.adapters;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.ItemDocument;
+import com.rey.material.widget.Button;
 
 import java.util.ArrayList;
 
@@ -68,6 +71,7 @@ public class ListDocumentAdapter extends BaseAdapter {
                             case R.id.document_delete:
                                 return true;
                             case R.id.document_share:
+                                showMyDialog(R.layout.dialog_share);
                                 return true;
                             default:
                                 return false;
@@ -80,5 +84,27 @@ public class ListDocumentAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private void showMyDialog(int id) {
+        final Dialog mDialog = new Dialog(context);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mDialog.setContentView(id);
+
+        Button okButton = (Button) mDialog.findViewById(R.id.share_ok_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.share_cancel_button);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+
+
+        mDialog.setCancelable(false);
+
+        mDialog.show();
     }
 }

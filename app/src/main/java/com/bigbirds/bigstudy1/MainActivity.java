@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mDialog.setCancelable(true);
+        mDialog.setCancelable(false);
 
         mDialog.show();
     }
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mDialog.setCancelable(true);
+        mDialog.setCancelable(false);
 
         mDialog.show();
     }
