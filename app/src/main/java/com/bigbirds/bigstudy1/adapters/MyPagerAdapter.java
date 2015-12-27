@@ -1,4 +1,4 @@
-package com.bigbirds.bigstudy1;
+package com.bigbirds.bigstudy1.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

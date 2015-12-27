@@ -1,7 +1,6 @@
 package com.bigbirds.bigstudy1.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.bigbirds.bigstudy1.MyPagerAdapter;
+import com.bigbirds.bigstudy1.adapters.MyPagerAdapter;
 import com.bigbirds.bigstudy1.R;
 import com.rey.material.widget.Button;
 

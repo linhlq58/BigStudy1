@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.bigbirds.bigstudy1.ListNoteAdapter;
-import com.bigbirds.bigstudy1.ListTaskAdapter;
+import com.bigbirds.bigstudy1.adapters.ListTaskAdapter;
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemNote;
 import com.bigbirds.bigstudy1.objects.ItemTask;
 
 import java.util.ArrayList;

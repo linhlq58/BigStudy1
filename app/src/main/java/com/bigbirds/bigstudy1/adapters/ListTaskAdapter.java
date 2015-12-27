@@ -1,4 +1,4 @@
-package com.bigbirds.bigstudy1;
+package com.bigbirds.bigstudy1.adapters;
 
 import android.app.Activity;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.ItemNote;
 import com.bigbirds.bigstudy1.objects.ItemTask;
 

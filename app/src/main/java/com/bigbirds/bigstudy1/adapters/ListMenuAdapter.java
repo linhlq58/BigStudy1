@@ -1,4 +1,4 @@
-package com.bigbirds.bigstudy1;
+package com.bigbirds.bigstudy1.adapters;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bigbirds.bigstudy1.MainActivity;
+import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.ItemMenu;
 
 import java.util.ArrayList;
