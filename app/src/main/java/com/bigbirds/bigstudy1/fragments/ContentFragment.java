@@ -108,7 +108,7 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 4);
-                endTime.set(Calendar.MONTH, newMonth - 1);
+                endTime.set(Calendar.MONTH, newMonth-1);
                 event = new WeekViewEvent(2,
                         "Đại số \n GĐ2-309", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_03));

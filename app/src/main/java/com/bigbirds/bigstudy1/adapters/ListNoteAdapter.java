@@ -10,7 +10,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemNote;
+import com.bigbirds.bigstudy1.objects.Note;
 
 import java.util.ArrayList;
 
@@ -21,9 +21,9 @@ public class ListNoteAdapter extends BaseAdapter {
 
     private Activity context;
     private int layout;
-    private ArrayList<ItemNote> arrayList;
+    private ArrayList<Note> arrayList;
 
-    public ListNoteAdapter(Activity context, int layout, ArrayList<ItemNote> arrayList) {
+    public ListNoteAdapter(Activity context, int layout, ArrayList<Note> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;

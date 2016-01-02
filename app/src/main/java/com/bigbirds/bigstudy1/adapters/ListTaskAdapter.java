@@ -10,7 +10,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemTask;
+import com.bigbirds.bigstudy1.objects.Task;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 public class ListTaskAdapter extends BaseAdapter {
     private Activity context;
     private int layout;
-    private ArrayList<ItemTask> arrayList;
+    private ArrayList<Task> arrayList;
 
-    public ListTaskAdapter(Activity context, int layout, ArrayList<ItemTask> arrayList) {
+    public ListTaskAdapter(Activity context, int layout, ArrayList<Task> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;

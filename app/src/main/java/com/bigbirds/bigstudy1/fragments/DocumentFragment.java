@@ -10,8 +10,8 @@ import android.widget.ListView;
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.adapters.ListDocumentAdapter;
 import com.bigbirds.bigstudy1.adapters.ListNoteAdapter;
-import com.bigbirds.bigstudy1.objects.ItemDocument;
-import com.bigbirds.bigstudy1.objects.ItemNote;
+import com.bigbirds.bigstudy1.objects.Document;
+import com.bigbirds.bigstudy1.objects.Note;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class DocumentFragment extends Fragment {
     private ListView documentList;
     private ListDocumentAdapter documentAdapter;
-    private ArrayList<ItemDocument> documentArray;
+    private ArrayList<Document> documentArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,12 +33,6 @@ public class DocumentFragment extends Fragment {
         documentList = (ListView) v.findViewById(R.id.document_list);
 
         documentArray = new ArrayList<>();
-        documentArray.add(new ItemDocument("Bài giảng tuần 1"));
-        documentArray.add(new ItemDocument("Bài giảng tuần 2"));
-        documentArray.add(new ItemDocument("Bài giảng tuần 3"));
-        documentArray.add(new ItemDocument("Bài giảng tuần 4"));
-        documentArray.add(new ItemDocument("Bài giảng tuần 5"));
-        documentArray.add(new ItemDocument("Bài giảng tuần 6"));
 
         documentAdapter = new ListDocumentAdapter(getActivity(), R.layout.item_document, documentArray);
 
