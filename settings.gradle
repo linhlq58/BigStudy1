@@ -1,4 +1,4 @@
 include ':app'
-include ':libs:Android-Week-View-develop'
+include ':libs:Android-Week-View'
 include ':libs:material-master'
 include ':libs:PagerSlidingTabStrip'

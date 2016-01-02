@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
+import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.bigbirds.bigstudy1.MainActivity;
@@ -78,7 +79,7 @@ public class ContentFragment extends Fragment {
             }
         });
 
-        mWeekView.setMonthChangeListener(new WeekView.MonthChangeListener() {
+        mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override
             public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 

@@ -1322,10 +1322,10 @@ public class WeekView extends View {
      *     <b>Note:</b> This method will only work if the week view is set to display more than 6 days at
      *     once.
      * </p>
-     * @param firstDayOfWeek The supported values are {@link Calendar#SUNDAY},
-     * {@link Calendar#MONDAY}, {@link Calendar#TUESDAY},
-     * {@link Calendar#WEDNESDAY}, {@link Calendar#THURSDAY},
-     * {@link Calendar#FRIDAY}.
+     * @param firstDayOfWeek The supported values are {@link java.util.Calendar#SUNDAY},
+     * {@link java.util.Calendar#MONDAY}, {@link java.util.Calendar#TUESDAY},
+     * {@link java.util.Calendar#WEDNESDAY}, {@link java.util.Calendar#THURSDAY},
+     * {@link java.util.Calendar#FRIDAY}.
      */
     public void setFirstDayOfWeek(int firstDayOfWeek) {
         mFirstDayOfWeek = firstDayOfWeek;
