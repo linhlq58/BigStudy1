@@ -292,56 +292,122 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     //Deletion
     ///////////////////////////////////////////////////////////////////
-    public void delete(Subject subject){
+    public void delete(Subject subject) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("Subject", "id=?", new String[]{Integer.toString(subject.getId())});
+        if (db != null)
+            db.delete("Subject", "id=?", new String[]{Integer.toString(subject.getId())});
+        else throw new SQLDataException();
     }
 
-    public void delete(Teacher teacher){
+    public void delete(Teacher teacher) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("Subject", "id=?", new String[]{Integer.toString(teacher.getId())});
+        if (db != null)
+            db.delete("Subject", "id=?", new String[]{Integer.toString(teacher.getId())});
+        else throw new SQLDataException();
     }
 
-    public void delete(Note note){
+    public void delete(Note note) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("Note", "id=?", new String[]{Integer.toString(note.getId())});
+        if (db != null)
+            db.delete("Note", "id=?", new String[]{Integer.toString(note.getId())});
+        else throw new SQLDataException();
     }
 
-    public void delete(Task task){
+    public void delete(Task task) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("Task", "id=?", new String[]{Integer.toString(task.getId())});
+        if (db != null)
+            db.delete("Task", "id=?", new String[]{Integer.toString(task.getId())});
+        else throw new SQLDataException();
     }
 
-    public void delete(Document document){
+    public void delete(Document document) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("Document", "id=?", new String[]{Integer.toString(document.getId())});
+        if (db != null)
+            db.delete("Document", "id=?", new String[]{Integer.toString(document.getId())});
+        else throw new SQLDataException();
     }
 
-    public void deleteByID(String type, int id){
+    public void deleteByID(String type, int id) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(type, "id=?", new String[]{Integer.toString(id)});
+        if (db != null)
+            db.delete(type, "id=?", new String[]{Integer.toString(id)});
+        else throw new SQLDataException();
     }
 
 
-    //Update - not yet
+    //Update
     ///////////////////////////////////////////////////////////////////
-    public void update(Subject subject){
+    public void update(Subject subject) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Subject.PROPERTIES.length);
+            values.put("name", subject.getName());
+            values.put("place", subject.getPlace());
+            if (subject.getTeacherID() > 0)
+                values.put("teacherID", subject.getTeacherID());
+            values.put("dayOfWeek", subject.getDayOfWeek());
+            values.put("beginningPeriod", subject.getBeginningPeriod());
+            values.put("endingPeriod", subject.getEndingPeriod());
+            values.put("year", subject.getYear());
+            values.put("semester", subject.getSemester());
 
+            db.update("Subject", values, "id=?", new String[]{Integer.toString(subject.getId())});
+        }
+        else throw new SQLDataException();
     }
 
-    public void update(Teacher teacher){
+    public void update(Teacher teacher) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Teacher.PROPERTIES.length);
+            values.put("name", teacher.getName());
+            values.put("phone", teacher.getPhone());
+            values.put("room", teacher.getRoom());
+            values.put("otherInfo", teacher.getOtherInfo());
 
+            db.update("Teacher", values, "id=?", new String[]{Integer.toString(teacher.getId())});
+        }
+        else throw new SQLDataException();
     }
 
-    public void update(Note note){
+    public void update(Note note) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Note.PROPERTIES.length);
+            values.put("title", note.getTitle());
+            values.put("content", note.getContent());
+            values.put("subjectID", note.getSubjectID());
 
+            db.update("Note", values, "id=?", new String[]{Integer.toString(note.getId())});
+        }
+        else throw new SQLDataException();
     }
 
-    public void update(Task task){
+    public void update(Task task) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Task.PROPERTIES.length);
+            values.put("title", task.getTitle());
+            values.put("content", task.getContent());
+            values.put("subjectID", task.getSubjectID());
+            values.put("dateTime", task.getDateTime());
 
+            db.update("Task", values, "id=?", new String[]{Integer.toString(task.getId())});
+        }
+        else throw new SQLDataException();
     }
 
-    public void update(Document document){
+    public void update(Document document) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Document.PROPERTIES.length);
+            values.put("title", document.getTitle());
+            values.put("description", document.getDescription());
+            values.put("subjectID", document.getSubjectID());
+            values.put("link", document.getLink());
 
+            db.update("Document", values, "id=?", new String[]{Integer.toString(document.getId())});
+        }
+        else throw new SQLDataException();
     }
 }
