@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.bigbirds.bigstudy1.objects.*;
@@ -126,11 +125,11 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         ArrayList<Teacher> res = new ArrayList<Teacher>();
         while (!cursor.isAfterLast()){
             Teacher teacher = new Teacher();
-            teacher.setId(cursor.getInt(0));
-            teacher.setName(cursor.getString(1));
-            teacher.setPhone(cursor.getString(2));
-            teacher.setRoom(cursor.getString(3));
-            teacher.setOtherInfo(cursor.getString(4));
+            teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
+            teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
+            teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
 
             res.add(teacher);
             cursor.moveToNext();
@@ -143,14 +142,22 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Subject.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
-        Teacher res = new Teacher();
-        res.setId(cursor.getInt(0));
-        res.setName(cursor.getString(1));
-        res.setPhone(cursor.getString(2));
-        res.setRoom(cursor.getString(3));
-        res.setOtherInfo(cursor.getString(4));
+        Teacher teacher = new Teacher();
+        teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
+        teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
+        teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+        teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
+        teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
 
-        return res;
+        return teacher;
+    }
+
+    public int getIDOfTheLastTeacher(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Teacher", Subject.PROPERTIES, null, null , null, null, null);
+        cursor.moveToLast();
+
+        return cursor.getInt(cursor.getColumnIndex("id"));
     }
 
     public ArrayList<Note> getNotesBySubjectID(int id){
