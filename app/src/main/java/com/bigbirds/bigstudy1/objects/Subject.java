@@ -112,7 +112,7 @@ public class Subject {
 
     @Override
     public String toString() {
-        return name;
+        return name + " " + place;
     }
 
     public boolean isCollided(Subject other){
