@@ -1,12 +1,15 @@
 package com.bigbirds.bigstudy1;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.bigbirds.bigstudy1.objects.*;
 
+import java.sql.SQLDataException;
 import java.util.ArrayList;
 
 public final class DatabaseClassHelper extends SQLiteOpenHelper {
@@ -43,6 +46,8 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
+    //Get references of type class
+    ////////////////////////////////////////////////////////////////
     public ArrayList<Subject> getSubjects(int year, int semester){
         SQLiteDatabase db = getReadableDatabase();
         ArrayList<Subject> res = new ArrayList<Subject>();
@@ -205,5 +210,138 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         }
 
         return res;
+    }
+
+
+    //Insertion
+    //////////////////////////////////////////////////////////////////
+    public void insert(Subject subject) throws SQLDataException {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Subject.PROPERTIES.length);
+            values.put("name", subject.getName());
+            values.put("place", subject.getPlace());
+            if (subject.getTeacherID() > 0)
+                values.put("teacherID", subject.getTeacherID());
+            values.put("dayOfWeek", subject.getDayOfWeek());
+            values.put("beginningPeriod", subject.getBeginningPeriod());
+            values.put("endingPeriod", subject.getEndingPeriod());
+            values.put("year", subject.getYear());
+            values.put("semester", subject.getSemester());
+
+            db.insert("Subject", null, values);
+        }
+        else throw new SQLDataException();
+    }
+
+    public void insert(Teacher teacher) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Teacher.PROPERTIES.length);
+            values.put("name", teacher.getName());
+            values.put("phone", teacher.getPhone());
+            values.put("room", teacher.getRoom());
+            values.put("otherInfo", teacher.getOtherInfo());
+
+            db.insert("Teacher", null, values);
+        }
+        else throw new SQLDataException();
+    }
+
+    public void insert(Note note) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Note.PROPERTIES.length);
+            values.put("title", note.getTitle());
+            values.put("content", note.getContent());
+            values.put("subjectID", note.getSubjectID());
+
+            db.insert("Note", null, values);
+        }
+        else throw new SQLDataException();
+    }
+
+    public void insert(Task task) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Task.PROPERTIES.length);
+            values.put("title", task.getTitle());
+            values.put("content", task.getContent());
+            values.put("subjectID", task.getSubjectID());
+            values.put("dateTime", task.getDateTime());
+
+            db.insert("Task", null, values);
+        }
+        else throw new SQLDataException();
+    }
+
+    public void insert(Document document) throws SQLDataException{
+        SQLiteDatabase db = getWritableDatabase();
+        if (db != null){
+            ContentValues values = new ContentValues(Document.PROPERTIES.length);
+            values.put("title", document.getTitle());
+            values.put("description", document.getDescription());
+            values.put("subjectID", document.getSubjectID());
+            values.put("link", document.getLink());
+
+            db.insert("Document", null, values);
+        }
+        else throw new SQLDataException();
+    }
+
+
+    //Deletion
+    ///////////////////////////////////////////////////////////////////
+    public void delete(Subject subject){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("Subject", "id=?", new String[]{Integer.toString(subject.getId())});
+    }
+
+    public void delete(Teacher teacher){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("Subject", "id=?", new String[]{Integer.toString(teacher.getId())});
+    }
+
+    public void delete(Note note){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("Note", "id=?", new String[]{Integer.toString(note.getId())});
+    }
+
+    public void delete(Task task){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("Task", "id=?", new String[]{Integer.toString(task.getId())});
+    }
+
+    public void delete(Document document){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("Document", "id=?", new String[]{Integer.toString(document.getId())});
+    }
+
+    public void deleteByID(String type, int id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(type, "id=?", new String[]{Integer.toString(id)});
+    }
+
+
+    //Update - not yet
+    ///////////////////////////////////////////////////////////////////
+    public void update(Subject subject){
+
+    }
+
+    public void update(Teacher teacher){
+
+    }
+
+    public void update(Note note){
+
+    }
+
+    public void update(Task task){
+
+    }
+
+    public void update(Document document){
+
     }
 }
