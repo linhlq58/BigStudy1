@@ -12,9 +12,6 @@ public class Subject {
     private int dayOfWeek;
     private int beginningPeriod;
     private int endingPeriod;
-
-
-
     private int year;
     private int semester;
 
