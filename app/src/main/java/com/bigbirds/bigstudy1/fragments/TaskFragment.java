@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.bigbirds.bigstudy1.adapters.ListTaskAdapter;
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemTask;
+import com.bigbirds.bigstudy1.objects.Task;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class TaskFragment extends Fragment {
 
     private ListView taskList;
-    private ArrayList<ItemTask> taskArray;
+    private ArrayList<Task> taskArray;
     private ListTaskAdapter taskAdapter;
 
     @Override
@@ -32,12 +32,6 @@ public class TaskFragment extends Fragment {
         taskList = (ListView) v.findViewById(R.id.task_list);
 
         taskArray = new ArrayList<>();
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
-        taskArray.add(new ItemTask("Hoàn thành bài tập XSTK"));
 
         taskAdapter = new ListTaskAdapter(getActivity(), R.layout.item_task, taskArray);
 

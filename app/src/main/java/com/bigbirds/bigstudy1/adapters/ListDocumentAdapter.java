@@ -12,7 +12,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemDocument;
+import com.bigbirds.bigstudy1.objects.Document;
 import com.rey.material.widget.Button;
 
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class ListDocumentAdapter extends BaseAdapter {
     private Activity context;
     private int layout;
-    private ArrayList<ItemDocument> arrayList;
+    private ArrayList<Document> arrayList;
 
-    public ListDocumentAdapter(Activity context, int layout, ArrayList<ItemDocument> arrayList) {
+    public ListDocumentAdapter(Activity context, int layout, ArrayList<Document> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
@@ -54,7 +54,7 @@ public class ListDocumentAdapter extends BaseAdapter {
 
         final TextView content = (TextView) convertView.findViewById(R.id.document_content);
 
-        content.setText(arrayList.get(position).getContent());
+
 
         final ImageView btnArrow = (ImageView) convertView.findViewById(R.id.btn_arrow3);
         btnArrow.setOnClickListener(new View.OnClickListener() {

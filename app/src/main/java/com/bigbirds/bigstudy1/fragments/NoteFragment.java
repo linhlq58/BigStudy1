@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.bigbirds.bigstudy1.adapters.ListNoteAdapter;
 import com.bigbirds.bigstudy1.R;
-import com.bigbirds.bigstudy1.objects.ItemNote;
+import com.bigbirds.bigstudy1.objects.Note;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class NoteFragment extends Fragment {
 
     private ListView noteList;
-    private ArrayList<ItemNote> noteArray;
+    private ArrayList<Note> noteArray;
     private ListNoteAdapter noteAdapter;
 
     @Override
@@ -32,12 +32,6 @@ public class NoteFragment extends Fragment {
         noteList = (ListView) v.findViewById(R.id.note_list);
 
         noteArray = new ArrayList<>();
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
-        noteArray.add(new ItemNote("Đại số đổi sang phòng 301-GĐ2"));
 
         noteAdapter = new ListNoteAdapter(getActivity(), R.layout.item_note, noteArray);
 
