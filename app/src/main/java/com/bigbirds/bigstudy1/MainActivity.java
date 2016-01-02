@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Dialog mDialog;
 
-    private Spinner spinner1, spinner2, documentSpinner;
+    private Spinner spinner1, spinner2, documentSpinner, subjectSpinner1, subjectSpinner2;
 
     private WeekView mWeekView;
 
@@ -130,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button saveButton = (Button) mDialog.findViewById(R.id.subject_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.subject_cancel_button);
+
+        subjectSpinner1 = (Spinner) mDialog.findViewById(R.id.subject_spinner1);
+        subjectSpinner2 = (Spinner) mDialog.findViewById(R.id.subject_spinner2);
+
+        initSubjectSpinner1();
+        initSubjectSpinner2();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,6 +245,34 @@ public class MainActivity extends AppCompatActivity {
         documentSpinner.setAdapter(spinnerAdapter);
 
         documentSpinner.setSelection(0);
+
+    }
+
+    private void initSubjectSpinner1() {
+        Integer spinnerArr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+        ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        subjectSpinner1.setAdapter(spinnerAdapter);
+
+        subjectSpinner1.setSelection(0);
+
+    }
+
+    private void initSubjectSpinner2() {
+        Integer spinnerArr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+        ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        subjectSpinner2.setAdapter(spinnerAdapter);
+
+        subjectSpinner2.setSelection(0);
 
     }
 
