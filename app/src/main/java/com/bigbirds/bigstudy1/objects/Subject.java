@@ -12,6 +12,35 @@ public class Subject {
     private int dayOfWeek;
     private int beginningPeriod;
     private int endingPeriod;
+
+
+
+    private int year;
+    private int semester;
+
+//    public static String STRING_ID_PROPERTY = "id";
+//    public static String STRING_NAME_PROPERTY = "name";
+//    public static String STRING_PLACE_PROPERTY = "place";
+//    public static String STRING_TEACHERID_PROPERTY = "teacherID";
+//    public static String STRING_DAYOFWEEK_PROPERTY = "dayOfWeek";
+//    public static String STRING_BEGINNINGPERIOD_PROPERTY = "beginningPeriod";
+//    public static String STRING_ENDINGPERIOD_PROPERTY = "endingPeriod";
+    public static String[] PROPERTIES = new String[] {"id", "name", "place", "teacherID", "dayOfWeek", "beginningPeriod", "endingPeriod", "year", "semester"};
+    public static String CREATE_SUBJECT_ENTRY =
+            "CREATE TABLE IF NOT EXISTS Subject ( " +
+                " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
+                " name TEXT NOT NULL," +
+                " place TEXT NOT NULL," +
+                " teacherID INTEGER," +
+                " dayOfWeek INTEGER NOT NULL," +
+                " beginningPeriod INTEGER NOT NULL," +
+                " endingPeriod INTEGER NOT NULL," +
+                " year INTEGER NOT NULL," +
+                " semester INTEGER NOT NULL" +
+            " )";
+
+    public static String DELETE_SUBJECT_ENTRY = "DROP TABLE IF EXISTS Subject";
+
     public int getId() {
         return id;
     }
@@ -66,6 +95,22 @@ public class Subject {
 
     public void setEndingPeriod(int endingPeriod) {
         this.endingPeriod = endingPeriod;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Override
