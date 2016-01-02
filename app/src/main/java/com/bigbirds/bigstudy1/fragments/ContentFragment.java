@@ -94,6 +94,7 @@ public class ContentFragment extends Fragment {
                 Calendar endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 3);
                 endTime.set(Calendar.MONTH, newMonth - 1);
+                endTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
                 WeekViewEvent event = new WeekViewEvent(1,
                         "Đường lối cách mạng của ĐCSVN \n B2-HT4", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_01));

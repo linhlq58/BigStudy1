@@ -1,106 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:text="Thêm môn học"
-        android:textColor="#FF03A9F4"
-        android:textSize="25sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Tên môn học"
-        android:textColor="#000000" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="VD: Giải tích 1..."
-        android:layout_marginBottom="10dp"
-        style="@style/EditTextCustomHolo"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Mã môn học"
-        android:textColor="#000000" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="VD: PES1045 2..."
-        android:layout_marginBottom="10dp"
-        style="@style/EditTextCustomHolo"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Địa điểm"
-        android:textColor="#000000" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="VD: P301 - G2..."
-        android:layout_marginBottom="10dp"
-        style="@style/EditTextCustomHolo"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Giảng viên"
-        android:textColor="#000000" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="VD: Lê Nguyên Khôi..."
-        android:layout_marginBottom="10dp"
-        style="@style/EditTextCustomHolo"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Thông tin thêm..."
-        android:textColor="#FF03A9F4" />
+    android:layout_height="400dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <com.rey.material.widget.Button
-            android:id="@+id/subject_save_button"
-            style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lưu"
-            app:rd_enable="true" />
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:text="Thêm môn học"
+            android:textColor="#FF03A9F4"
+            android:textSize="25sp" />
 
-        <com.rey.material.widget.Button
-            android:id="@+id/subject_cancel_button"
-            style="@style/Material.Drawable.Ripple.Wave.Light"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hủy"
-            app:rd_enable="true" />
+            android:layout_marginBottom="10dp"
+            android:text="Tên môn học"
+            android:textColor="#000000" />
 
+        <EditText
+            style="@style/EditTextCustomHolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="VD: Giải tích 1..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Mã môn học"
+            android:textColor="#000000" />
+
+        <EditText
+            style="@style/EditTextCustomHolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="VD: PES1045 2..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Địa điểm"
+            android:textColor="#000000" />
+
+        <EditText
+            style="@style/EditTextCustomHolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="VD: P301 - G2..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Giảng viên"
+            android:textColor="#000000" />
+
+        <EditText
+            style="@style/EditTextCustomHolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="VD: Lê Nguyên Khôi..." />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Thời gian"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="Từ tiết"
+                android:textColor="#000000" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/subject_spinner1"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="Đến tiết"
+                android:textColor="#000000" />
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/subject_spinner2"
+                style="@style/Material.Widget.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                app:rd_style="@style/Material.Drawable.Ripple.Wave" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Thông tin thêm..."
+            android:textColor="#FF03A9F4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/subject_save_button"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                app:rd_enable="true" />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/subject_cancel_button"
+                style="@style/Material.Drawable.Ripple.Wave.Light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                app:rd_enable="true" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
