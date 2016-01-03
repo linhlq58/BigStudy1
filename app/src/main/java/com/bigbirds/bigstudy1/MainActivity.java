@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.alamkanak.weekview.WeekView;
 import com.bigbirds.bigstudy1.adapters.ListMenuAdapter;
@@ -143,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
         Button saveButton = (Button) mDialog.findViewById(R.id.subject_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.subject_cancel_button);
 
+        final EditText name = (EditText) mDialog.findViewById(R.id.edit_subject_name);
+        final EditText location = (EditText) mDialog.findViewById(R.id.edit_subject_location);
+        final EditText teacher = (EditText) mDialog.findViewById(R.id.edit_subject_teacher);
+
         subjectSpinner1 = (Spinner) mDialog.findViewById(R.id.subject_spinner1);
         subjectSpinner2 = (Spinner) mDialog.findViewById(R.id.subject_spinner2);
         subjectSpinner3 = (Spinner) mDialog.findViewById(R.id.subject_spinner3);
@@ -153,10 +159,22 @@ public class MainActivity extends AppCompatActivity {
         initSubjectSpinner3();
         initSubjectSpinner4();
 
+
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isEmpty(name) || isEmpty(location)
+                        || (isEmpty(teacher) && subjectSpinner3.getSelectedItem().toString() == "<None>")) {
+                    Toast.makeText(MainActivity.this, "Bạn phải nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -356,6 +374,14 @@ public class MainActivity extends AppCompatActivity {
         itemMenus.add(new ItemMenu("Học kì 2", R.mipmap.ic_semester));
         itemMenus.add(new ItemMenu("Thêm học kì", R.mipmap.ic_plus));
 
+    }
+
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

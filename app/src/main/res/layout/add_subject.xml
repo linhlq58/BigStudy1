@@ -27,11 +27,11 @@
             android:textColor="#000000" />
 
         <EditText
+            android:id="@+id/edit_subject_name"
             style="@style/EditTextCustomHolo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="VD: Giải tích 1..." />
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -41,11 +41,11 @@
             android:textColor="#000000" />
 
         <EditText
+            android:id="@+id/edit_subject_location"
             style="@style/EditTextCustomHolo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="VD: P301 - G2..." />
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,11 +55,11 @@
             android:textColor="#000000" />
 
         <EditText
+            android:id="@+id/edit_subject_teacher"
             style="@style/EditTextCustomHolo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="VD: Lê Nguyên Khôi..." />
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:layout_width="match_parent"
