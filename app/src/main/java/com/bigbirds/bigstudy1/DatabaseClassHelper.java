@@ -105,6 +105,29 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         return sub;
     }
 
+    public ArrayList<Subject> getSubjectsByTime(int dayOfWeek, int year, int semester){
+        SQLiteDatabase db = getReadableDatabase();
+        ArrayList<Subject> res = new ArrayList<Subject>();
+        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
+                new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            Subject sub = new Subject();
+            sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            sub.setName(cursor.getString(cursor.getColumnIndex("name")));
+            sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
+            sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
+            sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
+            sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
+            sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+
+            res.add(sub);
+            cursor.moveToNext();
+        }
+
+        return res;
+    }
+
     public Teacher getTeacherById(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Subject.PROPERTIES, "id=?", new String[]{Integer.toString(id)}, null, null, null);
