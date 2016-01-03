@@ -252,8 +252,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues(Subject.PROPERTIES.length);
             values.put("name", subject.getName());
             values.put("place", subject.getPlace());
-            if (subject.getTeacherID() > 0)
-                values.put("teacherID", subject.getTeacherID());
+            values.put("teacherID", subject.getTeacherID());
             values.put("dayOfWeek", subject.getDayOfWeek());
             values.put("beginningPeriod", subject.getBeginningPeriod());
             values.put("endingPeriod", subject.getEndingPeriod());
@@ -374,8 +373,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues(Subject.PROPERTIES.length);
             values.put("name", subject.getName());
             values.put("place", subject.getPlace());
-            if (subject.getTeacherID() > 0)
-                values.put("teacherID", subject.getTeacherID());
+            values.put("teacherID", subject.getTeacherID());
             values.put("dayOfWeek", subject.getDayOfWeek());
             values.put("beginningPeriod", subject.getBeginningPeriod());
             values.put("endingPeriod", subject.getEndingPeriod());
