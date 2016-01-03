@@ -61,7 +61,7 @@
                 android:textColor="#000000" />
 
             <com.rey.material.widget.Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/task_spinner"
                 style="@style/Material.Widget.Spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -77,108 +77,19 @@
             android:text="Thời gian"
             android:textColor="#000000" />
 
-        <LinearLayout
+        <TimePicker
+            android:id="@+id/time_picker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
+        </TimePicker>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textColor="#000000" />
-
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-            <com.rey.material.widget.Spinner
-                android:id="@+id/spinner2"
-                style="@style/Material.Widget.Spinner"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                app:rd_style="@style/Material.Drawable.Ripple.Wave" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <DatePicker
+            android:id="@+id/date_picker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thứ "
-                android:textColor="#000000" />
-
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=","
-                android:textColor="#000000" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ngày "
-                android:textColor="#000000" />
-
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:textColor="#000000" />
-
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:textColor="#000000" />
-
-            <EditText
-                style="@style/EditTextCustomHolo"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-        </LinearLayout>
+        </DatePicker>
 
         <com.rey.material.widget.CheckBox
             style="@style/Material.Drawable.CheckBox"

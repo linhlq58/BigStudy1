@@ -79,6 +79,8 @@ public class ContentFragment extends Fragment {
             }
         });
 
+        mWeekView.setFirstDayOfWeek(Calendar.MONDAY);
+
         mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override
             public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
@@ -95,7 +97,6 @@ public class ContentFragment extends Fragment {
                 Calendar endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 3);
                 endTime.set(Calendar.MONTH, newMonth - 1);
-                endTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
                 WeekViewEvent event = new WeekViewEvent(1,
                         "Đường lối cách mạng của ĐCSVN \n B2-HT4", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_01));
@@ -105,11 +106,11 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 1);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 4);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(2,
                         "Đại số \n GĐ2-309", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_03));
@@ -119,7 +120,7 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 3);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 6);
@@ -133,12 +134,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 2);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 6);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(3,
                         "Toán cao cấp \n B2-HT8", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_03));
@@ -148,12 +149,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 0);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 2);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(4,
                         "Bóng đá 1 \n Sân 3", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_04));
@@ -163,12 +164,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 2);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 4);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(5,
                         "Thống kê cho khoa học xã hội \n B2-HT6", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_05));
@@ -178,12 +179,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 6);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 10);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(6,
                         "Tiếng Anh 4A \n A2-404", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_06));
@@ -193,12 +194,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 6);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 10);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(7,
                         "Tiếng Anh 4A \n A2-404", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_06));
@@ -208,12 +209,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 6);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 10);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(8,
                         "Tiếng Anh 4B \n A2-301", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_07));
@@ -223,12 +224,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 6);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 10);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(9,
                         "Tiếng Anh 4B \n A2-301", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_07));
@@ -238,12 +239,12 @@ public class ContentFragment extends Fragment {
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 6);
                 startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth-1);
+                startTime.set(Calendar.MONTH, newMonth - 1);
                 startTime.set(Calendar.YEAR, newYear);
                 endTime = (Calendar) startTime.clone();
                 endTime.set(Calendar.HOUR_OF_DAY, 10);
                 endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth-1);
+                endTime.set(Calendar.MONTH, newMonth - 1);
                 event = new WeekViewEvent(10,
                         "Tiếng Anh 4C \n B2-408", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_08));

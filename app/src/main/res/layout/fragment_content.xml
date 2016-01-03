@@ -24,6 +24,9 @@
         app:dayBackgroundColor="#05000000"
         app:todayBackgroundColor="#1848adff"
         app:headerColumnBackground="#ffffffff"
+        app:showNowLine="true"
+        app:nowLineColor="#000000"
+        app:nowLineThickness="1dp"
         />
 
     <ScrollView

@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TimePicker;
 
 import com.alamkanak.weekview.WeekView;
 import com.bigbirds.bigstudy1.adapters.ListMenuAdapter;
@@ -38,9 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Dialog mDialog;
 
-    private Spinner spinner1, spinner2, documentSpinner, subjectSpinner1, subjectSpinner2;
+    private Spinner taskSpinner, documentSpinner, subjectSpinner1, subjectSpinner2,
+            subjectSpinner3, subjectSpinner4, noteSpinner;
 
     private WeekView mWeekView;
+
+    private TimePicker timePicker;
+    private DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +117,10 @@ public class MainActivity extends AppCompatActivity {
         Button saveButton = (Button) mDialog.findViewById(R.id.note_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.note_cancel_button);
 
+        noteSpinner = (Spinner) mDialog.findViewById(R.id.note_spinner);
+
+        initNoteSpinner();
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,9 +145,13 @@ public class MainActivity extends AppCompatActivity {
 
         subjectSpinner1 = (Spinner) mDialog.findViewById(R.id.subject_spinner1);
         subjectSpinner2 = (Spinner) mDialog.findViewById(R.id.subject_spinner2);
+        subjectSpinner3 = (Spinner) mDialog.findViewById(R.id.subject_spinner3);
+        subjectSpinner4 = (Spinner) mDialog.findViewById(R.id.subject_spinner4);
 
         initSubjectSpinner1();
         initSubjectSpinner2();
+        initSubjectSpinner3();
+        initSubjectSpinner4();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,12 +174,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button saveButton = (Button) mDialog.findViewById(R.id.task_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.task_cancel_button);
+        timePicker = (TimePicker) mDialog.findViewById(R.id.time_picker);
+        datePicker = (DatePicker) mDialog.findViewById(R.id.date_picker);
 
-        spinner1 = (Spinner) mDialog.findViewById(R.id.spinner1);
-        spinner2 = (Spinner) mDialog.findViewById(R.id.spinner2);
+        datePicker.setCalendarViewShown(false);
 
-        initSpinner1();
-        initSpinner2();
+        taskSpinner = (Spinner) mDialog.findViewById(R.id.task_spinner);
+
+        initTaskSpinner();
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    private void initSpinner1() {
+    private void initTaskSpinner() {
         String spinnerArr[] = {"<None>", "Giải tích 2", "Lập trình nâng cao",
                 "Đại số", "Tối ưu hóa"};
 
@@ -215,23 +231,9 @@ public class MainActivity extends AppCompatActivity {
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
-        spinner1.setAdapter(spinnerAdapter);
+        taskSpinner.setAdapter(spinnerAdapter);
 
-        spinner1.setSelection(0);
-
-    }
-
-    private void initSpinner2() {
-        String spinnerArr[] = {"AM", "PM"};
-
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_item, spinnerArr);
-
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-
-        spinner2.setAdapter(spinnerAdapter);
-
-        spinner2.setSelection(0);
+        taskSpinner.setSelection(0);
 
     }
 
@@ -276,6 +278,48 @@ public class MainActivity extends AppCompatActivity {
 
         subjectSpinner2.setSelection(0);
 
+    }
+
+    private void initSubjectSpinner3() {
+        String spinnerArr[] = {"<None>", "Lê Nguyên Khôi", "Đặng Thanh Hải",
+                "Lê Sĩ Vinh", "Nguyễn Thị Thanh Vân"};
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        subjectSpinner3.setAdapter(spinnerAdapter);
+
+        subjectSpinner3.setSelection(0);
+    }
+
+    private void initSubjectSpinner4() {
+        String spinnerArr[] = {"Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6",
+                "Thứ 7", "Chủ Nhật"};
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        subjectSpinner4.setAdapter(spinnerAdapter);
+
+        subjectSpinner4.setSelection(0);
+    }
+
+    private void initNoteSpinner() {
+        String spinnerArr[] = {"<None>", "Giải tích 2", "Lập trình nâng cao",
+                "Đại số", "Tối ưu hóa"};
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item, spinnerArr);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+
+        noteSpinner.setAdapter(spinnerAdapter);
+
+        noteSpinner.setSelection(0);
     }
 
     private void initDrawerLayout() {
