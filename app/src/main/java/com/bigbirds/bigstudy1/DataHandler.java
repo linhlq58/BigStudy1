@@ -22,6 +22,7 @@ public class DataHandler {
         }
         if (!isCollided)
         {
+            //create new mode
             if (!isEdited)
             {
                 try{
@@ -62,6 +63,7 @@ public class DataHandler {
 
                 subject.setId(0);
             }
+            //edit mode
             else {
                 if (indexOfTeacherSelection < 0)
                 {
@@ -90,6 +92,15 @@ public class DataHandler {
                             catch (Exception e){
                                 return false;
                             }
+                    }
+                    else{
+                        subject.setTeacherID(null);
+                        try{
+                            DatabaseClassHelper.instance.update(subject);
+                        }
+                        catch (Exception e){
+                            return  false;
+                        }
                     }
                 }
                 else
