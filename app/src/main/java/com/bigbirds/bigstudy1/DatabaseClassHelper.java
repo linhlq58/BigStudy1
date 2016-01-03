@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 
 import com.bigbirds.bigstudy1.objects.*;
 
@@ -16,10 +17,15 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "local_db.db";
 
-    public DatabaseClassHelper(Context context) {
+    private DatabaseClassHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public static DatabaseClassHelper instance;
+
+    public static void createInstance(Context context){
+        if (instance == null) instance = new DatabaseClassHelper(context);
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Subject.CREATE_SUBJECT_ENTRY);
@@ -38,11 +44,6 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         db.execSQL(Document.DELETE_DOC_ENTRY);
 
         onCreate(db);
-    }
-
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
     }
 
     //Get references of type class
