@@ -8,7 +8,7 @@ public class Subject {
     private int id;
     private String name;
     private String place;
-    private int teacherID;
+    private Integer teacherID;
     private int dayOfWeek;
     private int beginningPeriod;
     private int endingPeriod;
@@ -70,11 +70,11 @@ public class Subject {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public int getTeacherID() {
+    public Integer getTeacherID() {
         return teacherID;
     }
 
-    public void setTeacherID(int teacherID) {
+    public void setTeacherID(Integer teacherID) {
         this.teacherID = teacherID;
     }
 
