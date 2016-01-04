@@ -23,6 +23,8 @@ import com.alamkanak.weekview.WeekView;
 import com.bigbirds.bigstudy1.adapters.ListMenuAdapter;
 import com.bigbirds.bigstudy1.fragments.ContentFragment;
 import com.bigbirds.bigstudy1.objects.ItemMenu;
+import com.bigbirds.bigstudy1.objects.Subject;
+import com.bigbirds.bigstudy1.objects.Teacher;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Spinner;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
 
-    private Dialog mDialog;
+    public Dialog mDialog;
 
     private Spinner taskSpinner, documentSpinner, subjectSpinner1, subjectSpinner2,
             subjectSpinner3, subjectSpinner4, noteSpinner;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TimePicker timePicker;
     private DatePicker datePicker;
+
+    private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         initDrawerLayout();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, new ContentFragment());
-        transaction.addToBackStack("ft");
         transaction.commit();
 
     }
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    private void showSubjectDialog() {
+    public void showSubjectDialog() {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -159,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
         initSubjectSpinner3();
         initSubjectSpinner4();
 
-
-
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,8 +172,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isEmpty(name) || isEmpty(location)
-                        || (isEmpty(teacher) && subjectSpinner3.getSelectedItem().toString() == "<None>")) {
-                    Toast.makeText(MainActivity.this, "Bạn phải nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                        || (!isEmpty(teacher) && subjectSpinner3.getSelectedItem().toString() != "<None>")) {
+                    Toast.makeText(MainActivity.this,
+                            "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Subject subject = new Subject();
+
+                    subject.setName(name.getText().toString());
+                    subject.setPlace(location.getText().toString());
+
+                    if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
+                        subject.setTeacherID(subjectSpinner3.getSelectedItemPosition() - 1);
+                    }
+
+                    subject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
+                    subject.setBeginningPeriod((int) subjectSpinner1.getSelectedItem());
+                    subject.setEndingPeriod((int) subjectSpinner2.getSelectedItem());
+                    subject.setYear(2016);
+                    subject.setSemester(1);
+
+                    if (!isEmpty(teacher)) {
+                        Teacher newTeacher = new Teacher();
+
+                        newTeacher.setName(teacher.getText().toString());
+
+                        boolean flag1 = DataHandler.saveSubjectTeacher(subject, newTeacher,
+                                subjectSpinner3.getSelectedItemPosition(), false);
+
+                        if (!flag1) {
+                            Toast.makeText(MainActivity.this,
+                                    "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        boolean flag2 = DataHandler.saveSubjectTeacher(subject, null,
+                                subjectSpinner3.getSelectedItemPosition(), false);
+
+                        if (!flag2) {
+                            Toast.makeText(MainActivity.this,
+                                    "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    transaction.replace(R.id.container, new ContentFragment());
+                    transaction.commit();
+
+                    mDialog.dismiss();
                 }
             }
         });
@@ -374,6 +418,27 @@ public class MainActivity extends AppCompatActivity {
         itemMenus.add(new ItemMenu("Học kì 2", R.mipmap.ic_semester));
         itemMenus.add(new ItemMenu("Thêm học kì", R.mipmap.ic_plus));
 
+    }
+
+    private int formatDayOfWeek(String s) {
+        switch (s) {
+            case "Chủ Nhật":
+                return 1;
+            case "Thứ 2":
+                return 2;
+            case "Thứ 3":
+                return 3;
+            case "Thứ 4":
+                return 4;
+            case "Thứ 5":
+                return 5;
+            case "Thứ 6":
+                return 6;
+            case "Thứ 7":
+                return 7;
+            default:
+                return 0;
+        }
     }
 
     private boolean isEmpty(EditText etText) {

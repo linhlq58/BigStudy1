@@ -18,8 +18,10 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.bigbirds.bigstudy1.DatabaseClassHelper;
 import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.R;
+import com.bigbirds.bigstudy1.objects.Subject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +45,10 @@ public class ContentFragment extends Fragment {
 
     private MainActivity context;
 
+    private DatabaseClassHelper myDb;
+
+    private ArrayList<Subject> subjectArr;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,12 @@ public class ContentFragment extends Fragment {
         mWeekView = (WeekView) view.findViewById(R.id.weekView);
         scrollNote = (ScrollView) view.findViewById(R.id.scroll_note);
         scrollTask = (ScrollView) view.findViewById(R.id.scroll_task);
+
+        myDb = new DatabaseClassHelper(context);
+
+        subjectArr = new ArrayList<>();
+
+        //((MainActivity) getActivity()).subjectDialog
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
@@ -88,7 +100,25 @@ public class ContentFragment extends Fragment {
                 // Populate the week view with some events.
                 List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
-                Calendar startTime = Calendar.getInstance();
+                subjectArr = myDb.getSubjects(2016, 1);
+
+                for (int i=0; i<subjectArr.size(); i++) {
+                    Calendar startTime = Calendar.getInstance();
+                    startTime.set(Calendar.DAY_OF_WEEK, subjectArr.get(i).getDayOfWeek());
+                    startTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getBeginningPeriod() - 1);
+                    startTime.set(Calendar.MINUTE, 0);
+                    startTime.set(Calendar.MONTH, newMonth - 1);
+                    startTime.set(Calendar.YEAR, newYear);
+                    Calendar endTime = (Calendar) startTime.clone();
+                    endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod());
+                    endTime.set(Calendar.MONTH, newMonth - 1);
+                    WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName(),
+                            subjectArr.get(i).getPlace(), startTime, endTime);
+                    event.setColor(getResources().getColor(R.color.event_color_01));
+                    events.add(event);
+                }
+
+                /*Calendar startTime = Calendar.getInstance();
                 startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
                 startTime.set(Calendar.HOUR_OF_DAY, 0);
                 startTime.set(Calendar.MINUTE, 0);
@@ -248,11 +278,13 @@ public class ContentFragment extends Fragment {
                 event = new WeekViewEvent(10,
                         "Tiếng Anh 4C \n B2-408", startTime, endTime);
                 event.setColor(getResources().getColor(R.color.event_color_08));
-                events.add(event);
+                events.add(event);*/
 
                 return events;
             }
         });
+
+        mWeekView.notifyDatasetChanged();
 
         setupDateTimeInterpreter(false);
     }
