@@ -127,10 +127,11 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         ArrayList<Subject> res = new ArrayList<Subject>();
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
                 new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        Subject sub = new Subject();
+        
         try{
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
+                Subject sub = new Subject();
                 sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 sub.setName(cursor.getString(cursor.getColumnIndex("name")));
                 sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
