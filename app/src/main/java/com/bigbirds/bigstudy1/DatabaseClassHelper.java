@@ -55,20 +55,23 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         ArrayList<Subject> res = new ArrayList<Subject>();
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "year=? and semester=?",
                 new String[]{Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            Subject sub = new Subject();
-            sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            sub.setName(cursor.getString(cursor.getColumnIndex("name")));
-            sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
-            sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
-            sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
-            sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
-            sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        try{
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                Subject sub = new Subject();
+                sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                sub.setName(cursor.getString(cursor.getColumnIndex("name")));
+                sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
+                sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
+                sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
+                sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
+                sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
 
-            res.add(sub);
-            cursor.moveToNext();
+                res.add(sub);
+                cursor.moveToNext();
+            }
         }
+        catch(Exception e){}
 
         db.close();
         return res;
@@ -77,15 +80,20 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public Subject getSubjectById(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "id=?", new String[]{Integer.toString(id)}, null, null, null);
-        cursor.moveToFirst();
         Subject sub = new Subject();
-        sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
-        sub.setName(cursor.getString(cursor.getColumnIndex("name")));
-        sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
-        sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
-        sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
-        sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
-        sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        try{
+            cursor.moveToFirst();
+        
+            sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            sub.setName(cursor.getString(cursor.getColumnIndex("name")));
+            sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
+            sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
+            sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
+            sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
+            sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        }
+        catch(Exception e){}
+        
 
         db.close();
         return sub;
@@ -96,15 +104,19 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and beginningPeriod=? and year=? and semester=?"
                 , new String[]{Integer.toString(dayOfWeek), Integer.toString(beginningPeriod), Integer.toString(year), Integer.toString(semester)},
                 null, null, null);
-        cursor.moveToFirst();
         Subject sub = new Subject();
-        sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
-        sub.setName(cursor.getString(cursor.getColumnIndex("name")));
-        sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
-        sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
-        sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
-        sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
-        sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        try{
+            cursor.moveToFirst();
+            
+            sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            sub.setName(cursor.getString(cursor.getColumnIndex("name")));
+            sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
+            sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
+            sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
+            sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
+            sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        }
+        catch (Exception e){}
 
         db.close();
         return sub;
@@ -115,20 +127,23 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         ArrayList<Subject> res = new ArrayList<Subject>();
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
                 new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            Subject sub = new Subject();
-            sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            sub.setName(cursor.getString(cursor.getColumnIndex("name")));
-            sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
-            sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
-            sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
-            sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
-            sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
+        Subject sub = new Subject();
+        try{
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                sub.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                sub.setName(cursor.getString(cursor.getColumnIndex("name")));
+                sub.setPlace(cursor.getString(cursor.getColumnIndex("place")));
+                sub.setTeacherID(cursor.getInt(cursor.getColumnIndex("teacherID")));
+                sub.setDayOfWeek(cursor.getInt(cursor.getColumnIndex("dayOfWeek")));
+                sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
+                sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
 
-            res.add(sub);
-            cursor.moveToNext();
+                res.add(sub);
+                cursor.moveToNext();
+            }
         }
+        catch(Exception e) {}
 
         db.close();
         return res;
@@ -137,13 +152,16 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public Teacher getTeacherById(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, "id=?", new String[]{Integer.toString(id)}, null, null, null);
-        cursor.moveToFirst();
         Teacher teacher = new Teacher();
-        teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
-        teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
-        teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
-        teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
-        teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
+        try{
+            cursor.moveToFirst();
+            teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
+            teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
+            teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
+        }
+        catch(Exception e){}
 
         db.close();
         return teacher;
@@ -152,19 +170,24 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public ArrayList<Teacher> getTeachers(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null, null, null, null);
-        cursor.moveToFirst();
         ArrayList<Teacher> res = new ArrayList<Teacher>();
-        while (!cursor.isAfterLast()){
-            Teacher teacher = new Teacher();
-            teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
-            teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
-            teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
-            teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
 
-            res.add(teacher);
-            cursor.moveToNext();
+        try{
+            cursor.moveToFirst();
+        
+            while (!cursor.isAfterLast()){
+                Teacher teacher = new Teacher();
+                teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
+                teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+                teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
+                teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
+
+                res.add(teacher);
+                cursor.moveToNext();
+            }
         }
+        catch(Exception e){}
 
         db.close();
         return res;
@@ -173,60 +196,43 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public Teacher getTheLastTeacher(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
-        cursor.moveToLast();
         Teacher teacher = new Teacher();
-        teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
-        teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
-        teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
-        teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
-        teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
+
+        try{
+            cursor.moveToLast();
+        
+            teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
+            teacher.setName(cursor.getString(cursor.getColumnIndex("name")));
+            teacher.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+            teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
+            teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
+        }
+        catch(Exception e){}
 
         db.close();
         return teacher;
     }
 
-    public int getIDOfTheLastTeacher(){
+    public Integer getIDOfTheLastTeacher(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
-        cursor.moveToLast();
-        db.close();
-        return cursor.getInt(cursor.getColumnIndex("id"));
+        try{
+            cursor.moveToLast();
+            db.close();
+            return cursor.getInt(cursor.getColumnIndex("id"));
+        }
+        catch(Exception e){}
+        return null;
     }
 
     public ArrayList<Note> getNotesBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
-        cursor.moveToFirst();
         ArrayList<Note> res = new ArrayList<Note>();
-        while (!cursor.isAfterLast()){
-            Note note = new Note();
-            note.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-            note.setContent(cursor.getString(cursor.getColumnIndex("content")));
-            note.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
 
-            res.add(note);
-            cursor.moveToNext();
-        }
-        db.close();
-        return res;
-    }
-
-    public ArrayList<Note> getNotesByDay(int dayOfWeek, int year, int semester){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
-                new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        cursor.moveToFirst();
-        ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
-        while (!cursor.isAfterLast()){
-            subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
-        }
-        cursor.close();
-
-        ArrayList<Note> res = new ArrayList<Note>();
-        for (Integer i : subjectIDs){
-            cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+        try{
             cursor.moveToFirst();
+        
             while (!cursor.isAfterLast()){
                 Note note = new Note();
                 note.setId(cursor.getInt(cursor.getColumnIndex("id")));
@@ -237,8 +243,50 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
                 res.add(note);
                 cursor.moveToNext();
             }
-            cursor.close();
         }
+        catch(Exception e){}
+
+        db.close();
+        return res;
+    }
+
+    public ArrayList<Note> getNotesByDay(int dayOfWeek, int year, int semester){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
+                new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
+        
+        ArrayList<Note> res = new ArrayList<Note>();
+        try{
+            ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
+            cursor.moveToFirst();
+        
+            while (!cursor.isAfterLast()){
+                subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
+            }
+            cursor.close();
+
+            
+            for (Integer i : subjectIDs){
+                cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+
+                try{
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast()){
+                        Note note = new Note();
+                        note.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                        note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                        note.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                        note.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+
+                        res.add(note);
+                        cursor.moveToNext();
+                    }
+                    cursor.close();
+                }
+                catch(Exception e){}
+            }
+        }
+        catch(Exception e){}
 
         db.close();
         return res;
@@ -247,19 +295,24 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public ArrayList<Task> getTasksBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
-        cursor.moveToFirst();
         ArrayList<Task> res = new ArrayList<Task>();
-        while (!cursor.isAfterLast()){
-            Task task = new Task();
-            task.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            task.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-            task.setContent(cursor.getString(cursor.getColumnIndex("content")));
-            task.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
-            task.setDateTime(cursor.getString(cursor.getColumnIndex("dateTime")));
 
-            res.add(task);
-            cursor.moveToNext();
+        try{
+            cursor.moveToFirst();
+        
+            while (!cursor.isAfterLast()){
+                Task task = new Task();
+                task.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                task.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                task.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                task.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+                task.setDateTime(cursor.getString(cursor.getColumnIndex("dateTime")));
+
+                res.add(task);
+                cursor.moveToNext();
+            }
         }
+        catch(Exception e){}
 
         db.close();
         return res;
@@ -269,35 +322,42 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Subject", Subject.PROPERTIES, "year=? and semester=?",
                 new String[]{Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        cursor.moveToFirst();
-        ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
-        while (!cursor.isAfterLast()){
-            subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
-        }
-        cursor.close();
-
         ArrayList<Task> res = new ArrayList<Task>();
-        for (Integer i : subjectIDs){
-            cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+
+        try{
+            cursor.moveToFirst();
+            ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
             while (!cursor.isAfterLast()){
-                long value = Long.parseLong(cursor.getString(cursor.getColumnIndex("dateTime")));
-                long oneWeek = 1000*60*60*24;
-                if (value > Calendar.getInstance().getTimeInMillis() && value <= Calendar.getInstance().getTimeInMillis() + oneWeek){
-                    Task task = new Task();
-                    task.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                    task.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    task.setContent(cursor.getString(cursor.getColumnIndex("content")));
-                    task.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
-                    task.setDateTime(cursor.getString(cursor.getColumnIndex("dateTime")));
-
-                    res.add(task);
-                }
-
-                cursor.moveToNext();
+                subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
             }
-        }
+            cursor.close();
+            
+            for (Integer i : subjectIDs){
+                cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
 
-        Task.sortByTime(res);
+                try{
+                    while (!cursor.isAfterLast()){
+                        long value = Long.parseLong(cursor.getString(cursor.getColumnIndex("dateTime")));
+                        long oneWeek = 1000*60*60*24;
+                        if (value > Calendar.getInstance().getTimeInMillis() && value <= Calendar.getInstance().getTimeInMillis() + oneWeek){
+                            Task task = new Task();
+                            task.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                            task.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                            task.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                            task.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+                            task.setDateTime(cursor.getString(cursor.getColumnIndex("dateTime")));
+
+                            res.add(task);
+                        }
+
+                        cursor.moveToNext();
+                    }
+                }
+                catch(Exception e){}
+            }
+            Task.sortByTime(res);
+        }
+        catch(Exception e){}
 
         db.close();
         return res;
@@ -306,19 +366,24 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public ArrayList<Document> getDocumentsBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Document", Document.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
-        cursor.moveToFirst();
+        
         ArrayList<Document> res = new ArrayList<Document>();
-        while (!cursor.isAfterLast()){
-            Document document = new Document();
-            document.setId(cursor.getInt(cursor.getColumnIndex("id")));
-            document.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-            document.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-            document.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
-            document.setLink(cursor.getString(cursor.getColumnIndex("link")));
 
-            res.add(document);
-            cursor.moveToNext();
+        try{
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                Document document = new Document();
+                document.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                document.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                document.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                document.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+                document.setLink(cursor.getString(cursor.getColumnIndex("link")));
+
+                res.add(document);
+                cursor.moveToNext();
+            }
         }
+        catch(Exception e){}
 
         db.close();
         return res;
