@@ -17,7 +17,7 @@ public class Teacher {
                 " name TEXT NOT NULL," +
                 " phone TEXT," +
                 " room TEXT," +
-                " otherInfo TEXT," +
+                " otherInfo TEXT" +
             " )";
 
 
