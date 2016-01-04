@@ -136,7 +136,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public Teacher getTeacherById(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Teacher", Subject.PROPERTIES, "id=?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, "id=?", new String[]{Integer.toString(id)}, null, null, null);
         cursor.moveToFirst();
         Teacher teacher = new Teacher();
         teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
@@ -172,7 +172,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public Teacher getTheLastTeacher(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Teacher", Subject.PROPERTIES, null, null , null, null, null);
+        Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
         Teacher teacher = new Teacher();
         teacher.setId(cursor.getInt(cursor.getColumnIndex("id")));
@@ -187,7 +187,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public int getIDOfTheLastTeacher(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Teacher", Subject.PROPERTIES, null, null , null, null, null);
+        Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
         db.close();
         return cursor.getInt(cursor.getColumnIndex("id"));
@@ -246,7 +246,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public ArrayList<Task> getTasksBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Task", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
         cursor.moveToFirst();
         ArrayList<Task> res = new ArrayList<Task>();
         while (!cursor.isAfterLast()){
@@ -278,7 +278,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         ArrayList<Task> res = new ArrayList<Task>();
         for (Integer i : subjectIDs){
-            cursor = db.query("Task", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+            cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
             while (!cursor.isAfterLast()){
                 long value = Long.parseLong(cursor.getString(cursor.getColumnIndex("dateTime")));
                 long oneWeek = 1000*60*60*24;
@@ -305,7 +305,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public ArrayList<Document> getDocumentsBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Document", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query("Document", Document.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
         cursor.moveToFirst();
         ArrayList<Document> res = new ArrayList<Document>();
         while (!cursor.isAfterLast()){
