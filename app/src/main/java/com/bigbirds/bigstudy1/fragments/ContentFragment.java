@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
@@ -45,8 +49,6 @@ public class ContentFragment extends Fragment {
 
     private MainActivity context;
 
-    private DatabaseClassHelper myDb;
-
     private ArrayList<Subject> subjectArr;
 
     @Override
@@ -69,9 +71,9 @@ public class ContentFragment extends Fragment {
         scrollNote = (ScrollView) view.findViewById(R.id.scroll_note);
         scrollTask = (ScrollView) view.findViewById(R.id.scroll_task);
 
-        myDb = new DatabaseClassHelper(context);
-
         subjectArr = new ArrayList<>();
+
+        subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
         //((MainActivity) getActivity()).subjectDialog
 
@@ -86,7 +88,42 @@ public class ContentFragment extends Fragment {
 
         mWeekView.setEventLongPressListener(new WeekView.EventLongPressListener() {
             @Override
-            public void onEventLongPress(WeekViewEvent weekViewEvent, RectF rectF) {
+            public void onEventLongPress(final WeekViewEvent weekViewEvent, RectF rectF) {
+
+                final int subjectId = (int) weekViewEvent.getId();
+
+                PopupMenu popupMenu = new PopupMenu(getActivity(), mWeekView);
+
+                popupMenu.getMenuInflater().inflate(R.menu.subject_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+
+                        switch (id) {
+                            case R.id.subject_edit:
+                                return true;
+                            case R.id.subject_delete:
+                                try {
+                                    DatabaseClassHelper.instance.delete(subjectArr.get(subjectId));
+                                } catch (Exception e) {
+                                    Toast.makeText(getActivity(), "Có lỗi khi xóa",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                mWeekView.notifyDatasetChanged();
+
+                                ((MainActivity) getActivity()).updateUI();
+
+                                return true;
+                            case R.id.subject_info:
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
 
             }
         });
@@ -100,8 +137,6 @@ public class ContentFragment extends Fragment {
                 // Populate the week view with some events.
                 List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
-                subjectArr = myDb.getSubjects(2016, 1);
-
                 for (int i=0; i<subjectArr.size(); i++) {
                     Calendar startTime = Calendar.getInstance();
                     startTime.set(Calendar.DAY_OF_WEEK, subjectArr.get(i).getDayOfWeek());
@@ -112,7 +147,7 @@ public class ContentFragment extends Fragment {
                     Calendar endTime = (Calendar) startTime.clone();
                     endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod());
                     endTime.set(Calendar.MONTH, newMonth - 1);
-                    WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName(),
+                    WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
                             subjectArr.get(i).getPlace(), startTime, endTime);
                     event.setColor(getResources().getColor(R.color.event_color_01));
                     events.add(event);

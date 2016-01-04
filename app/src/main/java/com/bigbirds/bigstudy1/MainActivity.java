@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton floatingActionButton;
 
-    public Dialog mDialog;
+    private Dialog mDialog;
 
     private Spinner taskSpinner, documentSpinner, subjectSpinner1, subjectSpinner2,
             subjectSpinner3, subjectSpinner4, noteSpinner;
@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TimePicker timePicker;
     private DatePicker datePicker;
-
-    private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(MainActivity.this, floatingActionButton);
 
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.floatingbtn_menu, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -101,14 +99,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //mWeekView = (WeekView) findViewById(R.id.weekView);
-
         setSupportActionBar(toolbar);
 
         initDrawerLayout();
 
-        transaction.replace(R.id.container, new ContentFragment());
-        transaction.commit();
+        updateUI();
 
     }
 
@@ -214,8 +209,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    transaction.replace(R.id.container, new ContentFragment());
-                    transaction.commit();
+                    updateUI();
 
                     mDialog.dismiss();
                 }
@@ -447,6 +441,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    public void updateUI() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new ContentFragment());
+        transaction.commit();
+
     }
 
     @Override
