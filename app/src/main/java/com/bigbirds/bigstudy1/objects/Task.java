@@ -12,11 +12,11 @@ public class Task {
 
     public static String CREATE_TASK_ENTRY =
             "CREATE TABLE IF NOT EXISTS Task ( " +
-                " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " title TEXT NOT NULL," +
                 " content TEXT," +
                 " subjectID TEXT," +
-                " dateTime TEXT," +
+                " dateTime TEXT" +
             " )";
     public static String DELETE_TASK_ENTRY = "DROP TABLE IF EXISTS Task";
 

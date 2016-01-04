@@ -14,11 +14,11 @@ public class Note {
 
     public static String CREATE_NOTE_ENTRY =
             "CREATE TABLE IF NOT EXISTS Note ( " +
-                    " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
-                    " title TEXT NOT NULL," +
-                    " content TEXT," +
-                    " subjectID TEXT," +
-                    " )";
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " title TEXT NOT NULL," +
+                " content TEXT," +
+                " subjectID TEXT" +
+            " )";
 
     public static String DELETE_NOTE_ENTRY = "DROP TABLE IF EXISTS Note";
 

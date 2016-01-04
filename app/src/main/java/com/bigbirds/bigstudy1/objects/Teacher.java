@@ -13,7 +13,7 @@ public class Teacher {
     public static String[] PROPERTIES = new String[] {"id", "name", "phone", "room", "otherInfo"};
     public static String CREATE_TEACHER_ENTRY =
             "CREATE TABLE IF NOT EXISTS Teacher ( " +
-                " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT NOT NULL," +
                 " phone TEXT," +
                 " room TEXT," +

@@ -25,7 +25,7 @@ public class Subject {
     public static String[] PROPERTIES = new String[] {"id", "name", "place", "teacherID", "dayOfWeek", "beginningPeriod", "endingPeriod", "year", "semester"};
     public static String CREATE_SUBJECT_ENTRY =
             "CREATE TABLE IF NOT EXISTS Subject ( " +
-                " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT NOT NULL," +
                 " place TEXT NOT NULL," +
                 " teacherID INTEGER," +

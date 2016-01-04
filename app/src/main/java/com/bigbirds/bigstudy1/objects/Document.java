@@ -15,7 +15,7 @@ public class Document {
 
     public static String CREATE_DOC_ENTRY =
             "CREATE TABLE IF NOT EXISTS Document ( " +
-                " id INTEGER PRIMARY KEY AUTO INCREAMENT," +
+                " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " title TEXT NOT NULL," +
                 " description TEXT," +
                 " subjectID TEXT," +
