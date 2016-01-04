@@ -33,7 +33,7 @@ public class DataHandler {
                 }
                 if (indexOfTeacherSelection <= 0)
                 {
-                    if (teacher != null && teacher.getName() != null && teacher.getName().length() > 0)
+                    if (teacher != null || teacher.getName() != null || teacher.getName().length() > 0)
                     {
                         try{
                             DatabaseClassHelper.instance.insert(teacher);
@@ -67,7 +67,7 @@ public class DataHandler {
             else {
                 if (indexOfTeacherSelection <= 0)
                 {
-                    if (teacher != null && teacher.getName() != null && teacher.getName().length() > 0)
+                    if (teacher != null || teacher.getName() != null || teacher.getName().length() > 0)
                     {
                         if (subject.getTeacherID() <= 0)
                         {
