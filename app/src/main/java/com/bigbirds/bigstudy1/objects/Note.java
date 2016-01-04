@@ -17,7 +17,7 @@ public class Note {
                 " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " title TEXT NOT NULL," +
                 " content TEXT," +
-                " subjectID TEXT" +
+                " subjectID INTEGER" +
             " )";
 
     public static String DELETE_NOTE_ENTRY = "DROP TABLE IF EXISTS Note";

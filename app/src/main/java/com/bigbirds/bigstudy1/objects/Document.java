@@ -18,7 +18,7 @@ public class Document {
                 " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " title TEXT NOT NULL," +
                 " description TEXT," +
-                " subjectID TEXT," +
+                " subjectID INTEGER," +
                 " link TEXT" +
             " )";
 

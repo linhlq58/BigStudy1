@@ -19,7 +19,7 @@ public class Task {
                 " id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " title TEXT NOT NULL," +
                 " content TEXT," +
-                " subjectID TEXT," +
+                " subjectID INTEGER," +
                 " dateTime TEXT" +
             " )";
     public static String DELETE_TASK_ENTRY = "DROP TABLE IF EXISTS Task";
