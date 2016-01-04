@@ -31,7 +31,7 @@ public class DataHandler {
                 catch (Exception e){
                     return false;
                 }
-                if (indexOfTeacherSelection < 0)
+                if (indexOfTeacherSelection <= 0)
                 {
                     if (teacher != null && teacher.getName() != null && teacher.getName().length() > 0)
                     {
@@ -65,7 +65,7 @@ public class DataHandler {
             }
             //edit mode
             else {
-                if (indexOfTeacherSelection < 0)
+                if (indexOfTeacherSelection <= 0)
                 {
                     if (teacher != null && teacher.getName() != null && teacher.getName().length() > 0)
                     {
