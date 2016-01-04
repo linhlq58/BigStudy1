@@ -219,8 +219,11 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
         try{
             cursor.moveToLast();
+            int i = cursor.getInt(cursor.getColumnIndex("id"));
+            cursor.close();
             db.close();
-            return cursor.getInt(cursor.getColumnIndex("id"));
+            
+            return i;
         }
         catch(Exception e){}
         return null;
