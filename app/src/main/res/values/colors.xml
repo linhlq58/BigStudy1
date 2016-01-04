@@ -57,4 +57,7 @@
     <color name="event_color_06">#b60093</color>
     <color name="event_color_07">#ffd81d5a</color>
     <color name="event_color_08">#008000</color>
+    <color name="event_color_09">#00ff00</color>
+    <color name="event_color_10">#d7cbbd</color>
+
 </resources>

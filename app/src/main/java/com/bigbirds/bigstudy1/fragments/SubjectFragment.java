@@ -41,14 +41,25 @@ public class SubjectFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        NoteFragment noteFragment = new NoteFragment();
+        TaskFragment taskFragment = new TaskFragment();
+        DocumentFragment documentFragment = new DocumentFragment();
+
+        Bundle bundle = this.getArguments();
+        int subjectId = bundle.getInt("subjectId");
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("subjectId1", subjectId);
+        noteFragment.setArguments(bundle1);
+
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         pager = (ViewPager) view.findViewById(R.id.pager);
 
         fragments = new ArrayList<>();
 
-        fragments.add(new NoteFragment());
-        fragments.add(new TaskFragment());
-        fragments.add(new DocumentFragment());
+        fragments.add(noteFragment);
+        fragments.add(taskFragment);
+        fragments.add(documentFragment);
 
         adapter = new MyPagerAdapter(getChildFragmentManager(), fragments);
 

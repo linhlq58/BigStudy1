@@ -75,13 +75,26 @@ public class ContentFragment extends Fragment {
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
+        final int[] colorArr = {R.color.event_color_01, R.color.event_color_02, R.color.event_color_03,
+                R.color.event_color_04, R.color.event_color_05, R.color.event_color_06,
+                R.color.event_color_07, R.color.event_color_08, R.color.event_color_09,
+                R.color.event_color_10};
+
         //((MainActivity) getActivity()).subjectDialog
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
             public void onEventClick(WeekViewEvent weekViewEvent, RectF rectF) {
+                int subjectId = (int) weekViewEvent.getId();
+
+                SubjectFragment subjectFragment = new SubjectFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("subjectId", subjectId);
+                subjectFragment.setArguments(bundle);
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, new SubjectFragment());
+                transaction.replace(R.id.container, subjectFragment);
                 transaction.commit();
             }
         });
@@ -103,6 +116,11 @@ public class ContentFragment extends Fragment {
 
                         switch (id) {
                             case R.id.subject_edit:
+                                ((MainActivity) getActivity()).showSubjectDialog(true, subjectArr.get(subjectId));
+
+                                mWeekView.notifyDatasetChanged();
+
+                                ((MainActivity) getActivity()).updateUI();
                                 return true;
                             case R.id.subject_delete:
                                 try {
@@ -134,7 +152,6 @@ public class ContentFragment extends Fragment {
             @Override
             public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
-                // Populate the week view with some events.
                 List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
                 for (int i=0; i<subjectArr.size(); i++) {
@@ -149,171 +166,9 @@ public class ContentFragment extends Fragment {
                     endTime.set(Calendar.MONTH, newMonth - 1);
                     WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
                             subjectArr.get(i).getPlace(), startTime, endTime);
-                    event.setColor(getResources().getColor(R.color.event_color_01));
+                    event.setColor(getResources().getColor(colorArr[i % 10]));
                     events.add(event);
                 }
-
-                /*Calendar startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 0);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                Calendar endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 3);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                WeekViewEvent event = new WeekViewEvent(1,
-                        "Đường lối cách mạng của ĐCSVN \n B2-HT4", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_01));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 1);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 4);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(2,
-                        "Đại số \n GĐ2-309", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_03));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 3);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 6);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(2,
-                        "Tâm lý học \n A2-610", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_02));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 2);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 6);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(3,
-                        "Toán cao cấp \n B2-HT8", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_03));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 0);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 2);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(4,
-                        "Bóng đá 1 \n Sân 3", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_04));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 2);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 4);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(5,
-                        "Thống kê cho khoa học xã hội \n B2-HT6", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_05));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 6);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 10);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(6,
-                        "Tiếng Anh 4A \n A2-404", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_06));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 6);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 10);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(7,
-                        "Tiếng Anh 4A \n A2-404", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_06));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 6);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 10);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(8,
-                        "Tiếng Anh 4B \n A2-301", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_07));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 6);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 10);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(9,
-                        "Tiếng Anh 4B \n A2-301", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_07));
-                events.add(event);
-
-                startTime = Calendar.getInstance();
-                startTime.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-                startTime.set(Calendar.HOUR_OF_DAY, 6);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, newMonth - 1);
-                startTime.set(Calendar.YEAR, newYear);
-                endTime = (Calendar) startTime.clone();
-                endTime.set(Calendar.HOUR_OF_DAY, 10);
-                endTime.set(Calendar.MINUTE, 0);
-                endTime.set(Calendar.MONTH, newMonth - 1);
-                event = new WeekViewEvent(10,
-                        "Tiếng Anh 4C \n B2-408", startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_08));
-                events.add(event);*/
 
                 return events;
             }
