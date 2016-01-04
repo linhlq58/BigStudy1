@@ -9,7 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.bigbirds.bigstudy1.objects.*;
 
 import java.sql.SQLDataException;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
@@ -67,6 +70,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
 
+        db.close();
         return res;
     }
 
@@ -83,6 +87,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
         sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
 
+        db.close();
         return sub;
     }
 
@@ -101,6 +106,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         sub.setBeginningPeriod(cursor.getInt(cursor.getColumnIndex("beginningPeriod")));
         sub.setEndingPeriod(cursor.getInt(cursor.getColumnIndex("endingPeriod")));
 
+        db.close();
         return sub;
     }
 
@@ -124,6 +130,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
 
+        db.close();
         return res;
     }
 
@@ -138,6 +145,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
         teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
 
+        db.close();
         return teacher;
     }
 
@@ -158,6 +166,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
 
+        db.close();
         return res;
     }
 
@@ -172,6 +181,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         teacher.setRoom(cursor.getString(cursor.getColumnIndex("room")));
         teacher.setOtherInfo(cursor.getString(cursor.getColumnIndex("otherInfo")));
 
+        db.close();
         return teacher;
     }
 
@@ -179,7 +189,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Subject.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
-
+        db.close();
         return cursor.getInt(cursor.getColumnIndex("id"));
     }
 
@@ -198,7 +208,39 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             res.add(note);
             cursor.moveToNext();
         }
+        db.close();
+        return res;
+    }
 
+    public ArrayList<Note> getNotesByDay(int dayOfWeek, int year, int semester){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
+                new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
+        cursor.moveToFirst();
+        ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
+        while (!cursor.isAfterLast()){
+            subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
+        }
+        cursor.close();
+
+        ArrayList<Note> res = new ArrayList<Note>();
+        for (Integer i : subjectIDs){
+            cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                Note note = new Note();
+                note.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                note.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                note.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+
+                res.add(note);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+
+        db.close();
         return res;
     }
 
@@ -219,6 +261,45 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
 
+        db.close();
+        return res;
+    }
+
+    public ArrayList<Task> getTasksInAWeek(int year, int semester){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "year=? and semester=?",
+                new String[]{Integer.toString(year), Integer.toString(semester)}, null, null, null);
+        cursor.moveToFirst();
+        ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
+        while (!cursor.isAfterLast()){
+            subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
+        }
+        cursor.close();
+
+        ArrayList<Task> res = new ArrayList<Task>();
+        for (Integer i : subjectIDs){
+            cursor = db.query("Task", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+            while (!cursor.isAfterLast()){
+                long value = Long.parseLong(cursor.getString(cursor.getColumnIndex("dateTime")));
+                long oneWeek = 1000*60*60*24;
+                if (value > Calendar.getInstance().getTimeInMillis() && value <= Calendar.getInstance().getTimeInMillis() + oneWeek){
+                    Task task = new Task();
+                    task.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    task.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                    task.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                    task.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+                    task.setDateTime(cursor.getString(cursor.getColumnIndex("dateTime")));
+
+                    res.add(task);
+                }
+
+                cursor.moveToNext();
+            }
+        }
+
+        Task.sortByTime(res);
+
+        db.close();
         return res;
     }
 
@@ -239,6 +320,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
 
+        db.close();
         return res;
     }
 
@@ -259,6 +341,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("semester", subject.getSemester());
 
             db.insert("Subject", null, values);
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -273,6 +356,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("otherInfo", teacher.getOtherInfo());
 
             db.insert("Teacher", null, values);
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -286,6 +370,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("subjectID", note.getSubjectID());
 
             db.insert("Note", null, values);
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -300,6 +385,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("dateTime", task.getDateTime());
 
             db.insert("Task", null, values);
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -314,6 +400,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("link", document.getLink());
 
             db.insert("Document", null, values);
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -323,43 +410,55 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     ///////////////////////////////////////////////////////////////////
     public void delete(Subject subject) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null){
             db.delete("Subject", "id=?", new String[]{Integer.toString(subject.getId())});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
     public void delete(Teacher teacher) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null){
             db.delete("Subject", "id=?", new String[]{Integer.toString(teacher.getId())});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
     public void delete(Note note) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null) {
             db.delete("Note", "id=?", new String[]{Integer.toString(note.getId())});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
     public void delete(Task task) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null) {
             db.delete("Task", "id=?", new String[]{Integer.toString(task.getId())});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
     public void delete(Document document) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null){
             db.delete("Document", "id=?", new String[]{Integer.toString(document.getId())});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
     public void deleteByID(String type, int id) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
-        if (db != null)
+        if (db != null) {
             db.delete(type, "id=?", new String[]{Integer.toString(id)});
+            db.close();
+        }
         else throw new SQLDataException();
     }
 
@@ -380,6 +479,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("semester", subject.getSemester());
 
             db.update("Subject", values, "id=?", new String[]{Integer.toString(subject.getId())});
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -394,6 +494,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("otherInfo", teacher.getOtherInfo());
 
             db.update("Teacher", values, "id=?", new String[]{Integer.toString(teacher.getId())});
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -407,6 +508,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("subjectID", note.getSubjectID());
 
             db.update("Note", values, "id=?", new String[]{Integer.toString(note.getId())});
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -421,6 +523,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("dateTime", task.getDateTime());
 
             db.update("Task", values, "id=?", new String[]{Integer.toString(task.getId())});
+            db.close();
         }
         else throw new SQLDataException();
     }
@@ -435,6 +538,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             values.put("link", document.getLink());
 
             db.update("Document", values, "id=?", new String[]{Integer.toString(document.getId())});
+            db.close();
         }
         else throw new SQLDataException();
     }

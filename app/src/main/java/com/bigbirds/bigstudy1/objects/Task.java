@@ -1,5 +1,9 @@
 package com.bigbirds.bigstudy1.objects;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Task {
     private int id;
     private String title;
@@ -58,5 +62,14 @@ public class Task {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public static void sortByTime(ArrayList<Task> tasks){
+        Collections.sort(tasks, new Comparator<Task>() {
+            @Override
+            public int compare(Task lhs, Task rhs) {
+                return (int)(Long.parseLong(lhs.getDateTime()) - Long.parseLong(rhs.getDateTime()));
+            }
+        });
     }
 }
