@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.addSubject:
-                                showSubjectDialog(false, null);
+                                showSubjectDialog(false, null, null);
                                 return true;
                             case R.id.addNote:
                                 showNoteDialog();
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    public void showSubjectDialog(final boolean isEdited, final Subject subject) {
+    public void showSubjectDialog(final boolean isEdited, final Subject subject, final Teacher teacher) {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         if (isEdited == true) {
             name.setText(subject.getName());
             location.setText(subject.getPlace());
-            //teacherName.setText((DatabaseClassHelper.instance.getTeacherById(subject.getTeacherID())).getName());
+            subjectSpinner3.setSelection(subject.getTeacherID());
             subjectSpinner4.setSelection(subject.getDayOfWeek()-1);
             subjectSpinner1.setSelection(subject.getBeginningPeriod()-1);
             subjectSpinner2.setSelection(subject.getEndingPeriod()-1);
@@ -206,33 +206,57 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,
                             "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
                 } else {
+                    if (isEdited == false) {
 
-                    Subject newSubject = new Subject();
+                        Subject newSubject = new Subject();
 
-                    newSubject.setName(name.getText().toString());
-                    newSubject.setPlace(location.getText().toString());
+                        newSubject.setName(name.getText().toString());
+                        newSubject.setPlace(location.getText().toString());
 
-                    if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
-                        newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
-                    }
+                        if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
+                            newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
+                        }
 
-                    newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
-                    newSubject.setBeginningPeriod((int) subjectSpinner1.getSelectedItem());
-                    newSubject.setEndingPeriod((int) subjectSpinner2.getSelectedItem());
-                    newSubject.setYear(2016);
-                    newSubject.setSemester(1);
+                        newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
+                        newSubject.setBeginningPeriod((int) subjectSpinner1.getSelectedItem());
+                        newSubject.setEndingPeriod((int) subjectSpinner2.getSelectedItem());
+                        newSubject.setYear(2016);
+                        newSubject.setSemester(1);
 
+                        Teacher newTeacher = new Teacher();
 
-                    Teacher newTeacher = new Teacher();
+                        newTeacher.setName(teacherName.getText().toString());
 
-                    newTeacher.setName(teacherName.getText().toString());
-
-                    boolean flag = DataHandler.saveSubjectTeacher(newSubject, newTeacher,
+                        boolean flag = DataHandler.saveSubjectTeacher(newSubject, newTeacher,
                                 subjectSpinner3.getSelectedItemPosition(), isEdited);
 
-                    if (flag == false && isEdited == false) {
-                        Toast.makeText(MainActivity.this,
-                                "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
+                        if (flag == false) {
+                            Toast.makeText(MainActivity.this,
+                                    "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        subject.setName(name.getText().toString());
+                        subject.setPlace(location.getText().toString());
+
+                        if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
+                            subject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
+                        }
+
+                        subject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
+                        subject.setBeginningPeriod((int) subjectSpinner1.getSelectedItem());
+                        subject.setEndingPeriod((int) subjectSpinner2.getSelectedItem());
+                        subject.setYear(2016);
+                        subject.setSemester(1);
+
+                        //teacher.setName(teacherName.getText().toString());
+
+                        boolean flag = DataHandler.saveSubjectTeacher(subject, null,
+                                subjectSpinner3.getSelectedItemPosition(), isEdited);
+
+                        if (flag == false) {
+                            Toast.makeText(MainActivity.this,
+                                    "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     updateUI();
@@ -373,8 +397,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initSubjectSpinner3() {
-        String spinnerArr[] = {"<None>", "Lê Nguyên Khôi", "Đặng Thanh Hải",
-                "Lê Sĩ Vinh", "Nguyễn Thị Thanh Vân"};
+        ArrayList<String> spinnerArr = new ArrayList<>();
+        spinnerArr.add("<None>");
+
+        ArrayList<Teacher> teacherArr = DatabaseClassHelper.instance.getTeachers();
+
+        for (int i=0; i<teacherArr.size(); i++) {
+            spinnerArr.add(teacherArr.get(i).getName());
+        }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerArr);

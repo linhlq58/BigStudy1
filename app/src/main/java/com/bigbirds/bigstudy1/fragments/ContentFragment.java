@@ -116,7 +116,8 @@ public class ContentFragment extends Fragment {
 
                         switch (id) {
                             case R.id.subject_edit:
-                                ((MainActivity) getActivity()).showSubjectDialog(true, subjectArr.get(subjectId));
+                                ((MainActivity) getActivity()).showSubjectDialog(true,
+                                        subjectArr.get(subjectId), null);
 
                                 mWeekView.notifyDatasetChanged();
 
@@ -164,10 +165,20 @@ public class ContentFragment extends Fragment {
                     Calendar endTime = (Calendar) startTime.clone();
                     endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod());
                     endTime.set(Calendar.MONTH, newMonth - 1);
+
+
+                        /*WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                                subjectArr.get(i).getPlace() + "\n"
+                                + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()), startTime, endTime);
+                        event.setColor(getResources().getColor(colorArr[i % 10]));
+                        events.add(event);*/
+
                     WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
                             subjectArr.get(i).getPlace(), startTime, endTime);
                     event.setColor(getResources().getColor(colorArr[i % 10]));
                     events.add(event);
+
+
                 }
 
                 return events;
