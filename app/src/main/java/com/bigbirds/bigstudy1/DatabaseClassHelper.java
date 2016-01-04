@@ -217,16 +217,12 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public Integer getIDOfTheLastTeacher(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
-        try{
-            cursor.moveToLast();
-            int i = cursor.getInt(cursor.getColumnIndex("id"));
-            cursor.close();
-            db.close();
-            
-            return i;
-        }
-        catch(Exception e){}
-        return null;
+        cursor.moveToLast();
+        int i = cursor.getInt(cursor.getColumnIndex("id"));
+        cursor.close();
+        db.close();
+
+        return i;
     }
 
     public ArrayList<Note> getNotesBySubjectID(int id){
