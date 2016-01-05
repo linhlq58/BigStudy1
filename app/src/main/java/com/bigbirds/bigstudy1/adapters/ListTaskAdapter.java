@@ -1,6 +1,7 @@
 package com.bigbirds.bigstudy1.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.bigbirds.bigstudy1.DatabaseClassHelper;
+import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.Task;
 
@@ -18,11 +21,11 @@ import java.util.ArrayList;
  * Created by Admin on 27/12/2015.
  */
 public class ListTaskAdapter extends BaseAdapter {
-    private Activity context;
+    private MainActivity context;
     private int layout;
     private ArrayList<Task> arrayList;
 
-    public ListTaskAdapter(Activity context, int layout, ArrayList<Task> arrayList) {
+    public ListTaskAdapter(MainActivity context, int layout, ArrayList<Task> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
@@ -44,16 +47,19 @@ public class ListTaskAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = context.getLayoutInflater().inflate(layout, parent, false);
         }
 
+        TextView title = (TextView) convertView.findViewById(R.id.task_title);
         TextView content = (TextView) convertView.findViewById(R.id.task_content);
 
+        title.setText(arrayList.get(position).getTitle());
         content.setText(arrayList.get(position).getContent());
 
         final ImageView btnArrow = (ImageView) convertView.findViewById(R.id.btn_arrow2);
+
         btnArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +70,20 @@ public class ListTaskAdapter extends BaseAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.note_edit:
+                                context.showTaskDialog(true, arrayList.get(position));
                                 return true;
                             case R.id.note_delete:
+
+                                try {
+                                    DatabaseClassHelper.instance.delete(arrayList.get(position));
+                                } catch (Exception e) {
+
+                                }
+
+                                Intent intent = new Intent();
+                                intent.setAction("updateUITaskFragment");
+                                context.sendBroadcast(intent);
+
                                 return true;
                             default:
                                 return false;

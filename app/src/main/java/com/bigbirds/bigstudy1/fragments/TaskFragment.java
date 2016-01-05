@@ -1,12 +1,20 @@
 package com.bigbirds.bigstudy1.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.bigbirds.bigstudy1.DatabaseClassHelper;
+import com.bigbirds.bigstudy1.MainActivity;
+import com.bigbirds.bigstudy1.adapters.ListNoteAdapter;
 import com.bigbirds.bigstudy1.adapters.ListTaskAdapter;
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.Task;
@@ -22,21 +30,49 @@ public class TaskFragment extends Fragment {
     private ArrayList<Task> taskArray;
     private ListTaskAdapter taskAdapter;
 
+    private View v;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null) {
             return null;
         }
 
-        View v = inflater.inflate(R.layout.fragment_task, container, false);
+        v = inflater.inflate(R.layout.fragment_task, container, false);
+
         taskList = (ListView) v.findViewById(R.id.task_list);
 
-        taskArray = new ArrayList<>();
+        IntentFilter filter = new IntentFilter("updateUITaskFragment");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onResume();
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver, filter);
 
-        taskAdapter = new ListTaskAdapter(getActivity(), R.layout.item_task, taskArray);
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+
+        final Bundle bundle = this.getArguments();
+        int subjectId = bundle.getInt("subjectId1");
+
+        taskArray = DatabaseClassHelper.instance.getTasksBySubjectID(subjectId);
+
+        if (taskArray.size() == 0) {
+            TextView nullText = (TextView) v.findViewById(R.id.task_null);
+            nullText.setText("Chưa có nhiệm vụ nào cho môn học này");
+        }
+
+        taskAdapter = new ListTaskAdapter(((MainActivity) getActivity()), R.layout.item_task, taskArray);
 
         taskList.setAdapter(taskAdapter);
 
-        return v;
+        taskAdapter.notifyDataSetChanged();
+
+        super.onResume();
     }
 }

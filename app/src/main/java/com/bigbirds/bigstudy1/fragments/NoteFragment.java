@@ -1,5 +1,9 @@
 package com.bigbirds.bigstudy1.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +30,7 @@ public class NoteFragment extends Fragment {
     private ListView noteList;
     private ArrayList<Note> noteArray;
     private ListNoteAdapter noteAdapter;
+    private View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,26 +43,41 @@ public class NoteFragment extends Fragment {
             return null;
         }
 
-        Bundle bundle = this.getArguments();
-        int subjectId = bundle.getInt("subjectId1");
-
-        View v = inflater.inflate(R.layout.fragment_note, container, false);
+        v = inflater.inflate(R.layout.fragment_note, container, false);
 
         noteList = (ListView) v.findViewById(R.id.note_list);
 
+        IntentFilter filter = new IntentFilter("updateUINoteFragment");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onResume();
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver, filter);
+
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+
+        final Bundle bundle = this.getArguments();
+        int subjectId = bundle.getInt("subjectId1");
+
         noteArray = DatabaseClassHelper.instance.getNotesBySubjectID(subjectId);
-
-        noteAdapter = new ListNoteAdapter(((MainActivity) getActivity()), R.layout.item_note, noteArray);
-
-        noteAdapter.notifyDataSetChanged();
-
-        noteList.setAdapter(noteAdapter);
 
         if (noteArray.size() == 0) {
             TextView nullText = (TextView) v.findViewById(R.id.note_null);
             nullText.setText("Chưa có ghi chú nào cho môn học này");
         }
 
-        return v;
+        noteAdapter = new ListNoteAdapter(((MainActivity) getActivity()), R.layout.item_note, noteArray);
+
+        noteList.setAdapter(noteAdapter);
+
+        noteAdapter.notifyDataSetChanged();
+
+        super.onResume();
     }
 }

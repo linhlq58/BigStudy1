@@ -51,6 +51,8 @@ public class SubjectFragment extends Fragment {
         Bundle bundle1 = new Bundle();
         bundle1.putInt("subjectId1", subjectId);
         noteFragment.setArguments(bundle1);
+        taskFragment.setArguments(bundle1);
+        documentFragment.setArguments(bundle1);
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         pager = (ViewPager) view.findViewById(R.id.pager);

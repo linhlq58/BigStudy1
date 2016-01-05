@@ -13,19 +13,29 @@
         android:layout_weight="0.8">
 
         <TextView
+            android:id="@+id/task_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/task_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hoàn thành bài tập môn XSTK"
-            android:textSize="16sp"/>
+            android:layout_below="@+id/task_title"
+            android:textSize="14sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="13:25, 26/10/2015"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            android:text="Deadline:"
+            android:textStyle="italic"
+
+            />
 
     </RelativeLayout>
 

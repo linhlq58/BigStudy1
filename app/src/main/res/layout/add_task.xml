@@ -28,6 +28,7 @@
             android:textColor="#000000" />
 
         <EditText
+            android:id="@+id/edit_task_title"
             style="@style/EditTextCustomHolo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
             android:textColor="#000000" />
 
         <EditText
+            android:id="@+id/edit_task_content"
             style="@style/EditTextCustomHolo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

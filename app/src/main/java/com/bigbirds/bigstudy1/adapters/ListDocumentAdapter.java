@@ -52,7 +52,7 @@ public class ListDocumentAdapter extends BaseAdapter {
             convertView = context.getLayoutInflater().inflate(layout, parent, false);
         }
 
-        final TextView content = (TextView) convertView.findViewById(R.id.document_content);
+        final TextView title = (TextView) convertView.findViewById(R.id.document_title);
 
 
 

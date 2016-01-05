@@ -1,6 +1,9 @@
 package com.bigbirds.bigstudy1;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -25,12 +28,14 @@ import com.bigbirds.bigstudy1.fragments.ContentFragment;
 import com.bigbirds.bigstudy1.objects.ItemMenu;
 import com.bigbirds.bigstudy1.objects.Note;
 import com.bigbirds.bigstudy1.objects.Subject;
+import com.bigbirds.bigstudy1.objects.Task;
 import com.bigbirds.bigstudy1.objects.Teacher;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                 showNoteDialog(false, null);
                                 return true;
                             case R.id.addTask:
-                                showTaskDialog();
+                                showTaskDialog(false, null);
                                 return true;
                             case R.id.addDocument:
                                 showDocumentDialog();
@@ -164,6 +169,10 @@ public class MainActivity extends AppCompatActivity {
                         DataHandler.saveNote(note, isEdited);
 
                     }
+
+                    Intent intent = new Intent();
+                    intent.setAction("updateUINoteFragment");
+                    MainActivity.this.sendBroadcast(intent);
 
                     mDialog.dismiss();
                 }
@@ -290,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    private void showTaskDialog() {
+    public void showTaskDialog(final boolean isEdited, final Task task) {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -298,6 +307,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button saveButton = (Button) mDialog.findViewById(R.id.task_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.task_cancel_button);
+
+        final EditText taskTitle = (EditText) mDialog.findViewById(R.id.edit_task_title);
+        final EditText taskContent = (EditText) mDialog.findViewById(R.id.edit_task_content);
+
         timePicker = (TimePicker) mDialog.findViewById(R.id.time_picker);
         datePicker = (DatePicker) mDialog.findViewById(R.id.date_picker);
 
@@ -307,10 +320,60 @@ public class MainActivity extends AppCompatActivity {
 
         initTaskSpinner();
 
+        if (isEdited == true) {
+            taskTitle.setText(task.getTitle());
+            taskContent.setText(task.getContent());
+            taskSpinner.setSelection(task.getSubjectID());
+
+            taskSpinner.setEnabled(false);
+        }
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDialog.dismiss();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isEmpty(taskTitle) || isEmpty(taskContent)) {
+                    Toast.makeText(MainActivity.this,
+                            "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (isEdited == false) {
+
+                        Date taskDate = new Date(datePicker.getYear(), datePicker.getMonth(),
+                                datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+
+                        Task newTask = new Task();
+
+                        newTask.setTitle(taskTitle.getText().toString());
+                        newTask.setContent(taskContent.getText().toString());
+                        newTask.setSubjectID(taskSpinner.getSelectedItemPosition());
+                        newTask.setDateTime(taskDate.getTime() + "");
+
+                        DataHandler.saveTask(newTask, isEdited);
+                    } else {
+
+                        task.setTitle(taskTitle.getText().toString());
+                        task.setContent(taskContent.getText().toString());
+                        task.setSubjectID(taskSpinner.getSelectedItemPosition());
+
+                        DataHandler.saveTask(task, isEdited);
+
+                    }
+
+                }
+
+                    Intent intent = new Intent();
+                    intent.setAction("updateUITaskFragment");
+                    MainActivity.this.sendBroadcast(intent);
+
+                    mDialog.dismiss();
+
             }
         });
 

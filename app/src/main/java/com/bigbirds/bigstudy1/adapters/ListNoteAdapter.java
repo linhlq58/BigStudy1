@@ -1,6 +1,7 @@
 package com.bigbirds.bigstudy1.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,11 @@ public class ListNoteAdapter extends BaseAdapter {
                                 } catch (Exception e) {
 
                                 }
+
+                                Intent intent = new Intent();
+                                intent.setAction("updateUINoteFragment");
+                                context.sendBroadcast(intent);
+
                                 return true;
                             default:
                                 return false;
