@@ -206,13 +206,18 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,
                             "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (!isEdited) {
+                    if (isEdited == false) {
 
                         Subject newSubject = new Subject();
-                        Teacher newTeacher = new Teacher();
 
                         newSubject.setName(name.getText().toString());
                         newSubject.setPlace(location.getText().toString());
+
+                        if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
+                            newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
+                        } else {
+                            newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID() + 1);
+                        }
 
                         newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
                         newSubject.setBeginningPeriod((int) subjectSpinner1.getSelectedItem());
@@ -220,17 +225,14 @@ public class MainActivity extends AppCompatActivity {
                         newSubject.setYear(2016);
                         newSubject.setSemester(1);
 
-                        if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
-                            newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
-                        }
-                        else {
-                            newTeacher.setName(teacherName.getText().toString());
-                        }
+                        Teacher newTeacher = new Teacher();
+
+                        newTeacher.setName(teacherName.getText().toString());
 
                         boolean flag = DataHandler.saveSubjectTeacher(newSubject, newTeacher,
                                 subjectSpinner3.getSelectedItemPosition(), isEdited);
 
-                        if (!flag) {
+                        if (flag == false) {
                             Toast.makeText(MainActivity.this,
                                     "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
                         }
@@ -253,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                         boolean flag = DataHandler.saveSubjectTeacher(subject, null,
                                 subjectSpinner3.getSelectedItemPosition(), isEdited);
 
-                        if (!flag) {
+                        if (flag == false) {
                             Toast.makeText(MainActivity.this,
                                     "Môn học bạn nhập bị trùng thời gian!", Toast.LENGTH_SHORT).show();
                         }
