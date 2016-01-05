@@ -212,12 +212,18 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         return teacher;
     }
 
-    public int getLastInsertedTeacherRowID(){
+    public Integer getLastInsertedTeacherRowID(){
+
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
-        cursor.moveToLast();
-        int i = cursor.getInt(cursor.getColumnIndex("id"));
-        cursor.close();
+        Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null, null, null, null);
+        Integer i = null;
+        try{
+            cursor.moveToLast();
+            i = cursor.getInt(cursor.getColumnIndex("id"));
+            cursor.close();
+        }
+        catch (Exception e){}
+
         db.close();
 
         return i;
@@ -230,8 +236,8 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         try{
             cursor.moveToFirst();
-        
-            while (!cursor.isAfterLast()){
+
+            while (!cursor.isAfterLast()) {
                 Note note = new Note();
                 note.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
