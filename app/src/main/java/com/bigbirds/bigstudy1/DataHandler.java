@@ -37,7 +37,7 @@ public class DataHandler {
                     {
                         try{
                             DatabaseClassHelper.instance.insert(teacher);
-                            subject.setTeacherID(DatabaseClassHelper.instance.getIDOfTheLastTeacher());
+                            subject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID());
                             DatabaseClassHelper.instance.update(subject);
                         }
                         catch (Exception e){
@@ -68,7 +68,7 @@ public class DataHandler {
                         {
                             try{
                                 DatabaseClassHelper.instance.insert(teacher);
-                                subject.setTeacherID(DatabaseClassHelper.instance.getIDOfTheLastTeacher());
+                                subject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID());
                                 DatabaseClassHelper.instance.update(subject);
                             }
                             catch (Exception e){

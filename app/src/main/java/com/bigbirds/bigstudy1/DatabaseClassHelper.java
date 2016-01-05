@@ -214,7 +214,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         return teacher;
     }
 
-    public Integer getIDOfTheLastTeacher(){
+    public int getLastInsertedTeacherRowID(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
