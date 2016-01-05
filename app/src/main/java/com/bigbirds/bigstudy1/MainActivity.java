@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
                         if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
                             newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
                         } else {
-                            newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID() + 1);
+                            newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID());
                         }
 
                         newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
