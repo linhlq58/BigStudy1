@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bigbirds.bigstudy1.DatabaseClassHelper;
+import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.adapters.ListNoteAdapter;
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.Note;
@@ -46,7 +47,7 @@ public class NoteFragment extends Fragment {
 
         noteArray = DatabaseClassHelper.instance.getNotesBySubjectID(subjectId);
 
-        noteAdapter = new ListNoteAdapter(getActivity(), R.layout.item_note, noteArray);
+        noteAdapter = new ListNoteAdapter(((MainActivity) getActivity()), R.layout.item_note, noteArray);
 
         noteAdapter.notifyDataSetChanged();
 

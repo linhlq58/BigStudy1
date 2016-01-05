@@ -22,11 +22,11 @@ import java.util.ArrayList;
  */
 public class ListNoteAdapter extends BaseAdapter {
 
-    private Activity context;
+    private MainActivity context;
     private int layout;
     private ArrayList<Note> arrayList;
 
-    public ListNoteAdapter(Activity context, int layout, ArrayList<Note> arrayList) {
+    public ListNoteAdapter(MainActivity context, int layout, ArrayList<Note> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
@@ -70,6 +70,7 @@ public class ListNoteAdapter extends BaseAdapter {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.note_edit:
+                                context.showNoteDialog(true, arrayList.get(position));
                                 return true;
                             case R.id.note_delete:
                                 try {

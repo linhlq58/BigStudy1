@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                 showSubjectDialog(false, null, null);
                                 return true;
                             case R.id.addNote:
-                                showNoteDialog();
+                                showNoteDialog(false, null);
                                 return true;
                             case R.id.addTask:
                                 showTaskDialog();
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showNoteDialog() {
+    public void showNoteDialog(final boolean isEdited, final Note note) {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -126,6 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
         initNoteSpinner();
 
+        if (isEdited == true) {
+            noteTitle.setText(note.getTitle());
+            noteContent.setText(note.getContent());
+            noteSpinner.setSelection(note.getSubjectID());
+
+            noteSpinner.setEnabled(false);
+        }
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,13 +148,22 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,
                             "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Note newNote = new Note();
+                    if (isEdited == false) {
+                        Note newNote = new Note();
 
-                    newNote.setTitle(noteTitle.getText().toString());
-                    newNote.setContent(noteContent.getText().toString());
-                    newNote.setSubjectID(noteSpinner.getSelectedItemPosition());
+                        newNote.setTitle(noteTitle.getText().toString());
+                        newNote.setContent(noteContent.getText().toString());
+                        newNote.setSubjectID(noteSpinner.getSelectedItemPosition());
 
-                    DataHandler.saveNote(newNote, false);
+                        DataHandler.saveNote(newNote, isEdited);
+                    } else {
+                        note.setTitle(noteTitle.getText().toString());
+                        note.setContent(noteContent.getText().toString());
+                        note.setSubjectID(noteSpinner.getSelectedItemPosition());
+
+                        DataHandler.saveNote(note, isEdited);
+
+                    }
 
                     mDialog.dismiss();
                 }
