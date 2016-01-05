@@ -167,16 +167,15 @@ public class ContentFragment extends Fragment {
                     endTime.set(Calendar.MONTH, newMonth - 1);
 
 
-                        /*WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
-                                subjectArr.get(i).getPlace() + "\n"
-                                + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()), startTime, endTime);
-                        event.setColor(getResources().getColor(colorArr[i % 10]));
-                        events.add(event);*/
-
                     WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
-                            subjectArr.get(i).getPlace(), startTime, endTime);
+                            subjectArr.get(i).getPlace() + "\n" + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()).getName(), startTime, endTime);
                     event.setColor(getResources().getColor(colorArr[i % 10]));
                     events.add(event);
+
+                    /*WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                            subjectArr.get(i).getPlace(), startTime, endTime);
+                    event.setColor(getResources().getColor(colorArr[i % 10]));
+                    events.add(event);*/
 
 
                 }
