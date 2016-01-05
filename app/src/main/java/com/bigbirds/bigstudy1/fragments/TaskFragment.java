@@ -31,6 +31,7 @@ public class TaskFragment extends Fragment {
     private ListTaskAdapter taskAdapter;
 
     private View v;
+    private TextView nullText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class TaskFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_task, container, false);
 
         taskList = (ListView) v.findViewById(R.id.task_list);
+
+        nullText = (TextView) v.findViewById(R.id.task_null);
 
         IntentFilter filter = new IntentFilter("updateUITaskFragment");
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -63,8 +66,9 @@ public class TaskFragment extends Fragment {
         taskArray = DatabaseClassHelper.instance.getTasksBySubjectID(subjectId);
 
         if (taskArray.size() == 0) {
-            TextView nullText = (TextView) v.findViewById(R.id.task_null);
             nullText.setText("Chưa có nhiệm vụ nào cho môn học này");
+        } else {
+            nullText.setText("");
         }
 
         taskAdapter = new ListTaskAdapter(((MainActivity) getActivity()), R.layout.item_task, taskArray);

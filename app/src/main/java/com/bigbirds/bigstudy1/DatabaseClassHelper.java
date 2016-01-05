@@ -225,7 +225,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public ArrayList<Note> getNotesBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, "id desc");
         ArrayList<Note> res = new ArrayList<Note>();
 
         try{
@@ -292,7 +292,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public ArrayList<Task> getTasksBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
+        Cursor cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, "id desc");
         ArrayList<Task> res = new ArrayList<Task>();
 
         try{

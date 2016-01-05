@@ -35,6 +35,7 @@ import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -321,8 +322,14 @@ public class MainActivity extends AppCompatActivity {
         initTaskSpinner();
 
         if (isEdited == true) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.parseLong(task.getDateTime()));
+
             taskTitle.setText(task.getTitle());
             taskContent.setText(task.getContent());
+            timePicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
+            timePicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
+            datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             taskSpinner.setSelection(task.getSubjectID());
 
             taskSpinner.setEnabled(false);
@@ -345,22 +352,34 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     if (isEdited == false) {
 
-                        Date taskDate = new Date(datePicker.getYear(), datePicker.getMonth(),
-                                datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, datePicker.getYear());
+                        calendar.set(Calendar.MONTH, datePicker.getMonth());
+                        calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
                         Task newTask = new Task();
 
                         newTask.setTitle(taskTitle.getText().toString());
                         newTask.setContent(taskContent.getText().toString());
                         newTask.setSubjectID(taskSpinner.getSelectedItemPosition());
-                        newTask.setDateTime(taskDate.getTime() + "");
+                        newTask.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(newTask, isEdited);
                     } else {
 
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, datePicker.getYear());
+                        calendar.set(Calendar.MONTH, datePicker.getMonth());
+                        calendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+
                         task.setTitle(taskTitle.getText().toString());
                         task.setContent(taskContent.getText().toString());
                         task.setSubjectID(taskSpinner.getSelectedItemPosition());
+                        task.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(task, isEdited);
 
@@ -368,11 +387,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                    Intent intent = new Intent();
-                    intent.setAction("updateUITaskFragment");
-                    MainActivity.this.sendBroadcast(intent);
+                Intent intent = new Intent();
+                intent.setAction("updateUITaskFragment");
+                MainActivity.this.sendBroadcast(intent);
 
-                    mDialog.dismiss();
+                mDialog.dismiss();
 
             }
         });
