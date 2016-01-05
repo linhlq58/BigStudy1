@@ -267,9 +267,9 @@ public class MainActivity extends AppCompatActivity {
                         subject.setYear(2016);
                         subject.setSemester(1);
 
-                        //teacher.setName(teacherName.getText().toString());
+                        teacher.setName(teacherName.getText().toString());
 
-                        boolean flag = DataHandler.saveSubjectTeacher(subject, null,
+                        boolean flag = DataHandler.saveSubjectTeacher(subject, teacher,
                                 subjectSpinner3.getSelectedItemPosition(), isEdited);
 
                         if (flag == false) {

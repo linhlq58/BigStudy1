@@ -117,7 +117,8 @@ public class ContentFragment extends Fragment {
                         switch (id) {
                             case R.id.subject_edit:
                                 ((MainActivity) getActivity()).showSubjectDialog(true,
-                                        subjectArr.get(subjectId), null);
+                                        subjectArr.get(subjectId),
+                                        DatabaseClassHelper.instance.getTeacherById(subjectArr.get(subjectId).getTeacherID()));
 
                                 mWeekView.notifyDatasetChanged();
 
