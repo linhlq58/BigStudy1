@@ -62,17 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        /*ArrayList<Teacher> teachersArr = DatabaseClassHelper.instance.getTeachers();
-
-        for (int i=0; i<teachersArr.size(); i++) {
-            try {
-                DatabaseClassHelper.instance.delete(teachersArr.get(i));
-            } catch (Exception e) {
-
-            }
-
-        }*/
-
         itemMenus = new ArrayList<>();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -226,8 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
                         if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
                             newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
-                        } else {
-                            newSubject.setTeacherID(DatabaseClassHelper.instance.getIDOfTheLastTeacher() + 1);
                         }
 
                         newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));

@@ -214,7 +214,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         return teacher;
     }
 
-    public Integer getIDOfTheLastTeacher(){
+    public int getLastInsertedTeacherRowID(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("Teacher", Teacher.PROPERTIES, null, null , null, null, null);
         cursor.moveToLast();
@@ -485,7 +485,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
     public void delete(Teacher teacher) throws SQLDataException{
         SQLiteDatabase db = getWritableDatabase();
         if (db != null){
-            db.delete("Subject", "id=?", new String[]{Integer.toString(teacher.getId())});
+            db.delete("Teacher", "id=?", new String[]{Integer.toString(teacher.getId())});
             db.close();
         }
         else throw new SQLDataException();
