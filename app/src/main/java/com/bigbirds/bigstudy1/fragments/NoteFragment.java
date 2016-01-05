@@ -31,6 +31,7 @@ public class NoteFragment extends Fragment {
     private ArrayList<Note> noteArray;
     private ListNoteAdapter noteAdapter;
     private View v;
+    private TextView nullText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class NoteFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_note, container, false);
 
         noteList = (ListView) v.findViewById(R.id.note_list);
+
+        nullText = (TextView) v.findViewById(R.id.note_null);
 
         IntentFilter filter = new IntentFilter("updateUINoteFragment");
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -68,15 +71,16 @@ public class NoteFragment extends Fragment {
         noteArray = DatabaseClassHelper.instance.getNotesBySubjectID(subjectId);
 
         if (noteArray.size() == 0) {
-            TextView nullText = (TextView) v.findViewById(R.id.note_null);
+
             nullText.setText("Chưa có ghi chú nào cho môn học này");
+        } else {
+
+            nullText.setText("");
         }
 
         noteAdapter = new ListNoteAdapter(((MainActivity) getActivity()), R.layout.item_note, noteArray);
 
         noteList.setAdapter(noteAdapter);
-
-        noteAdapter.notifyDataSetChanged();
 
         super.onResume();
     }

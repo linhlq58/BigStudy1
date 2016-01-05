@@ -15,7 +15,9 @@ import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.R;
 import com.bigbirds.bigstudy1.objects.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Admin on 27/12/2015.
@@ -54,9 +56,11 @@ public class ListTaskAdapter extends BaseAdapter {
 
         TextView title = (TextView) convertView.findViewById(R.id.task_title);
         TextView content = (TextView) convertView.findViewById(R.id.task_content);
+        TextView time = (TextView) convertView.findViewById(R.id.task_time);
 
         title.setText(arrayList.get(position).getTitle());
         content.setText(arrayList.get(position).getContent());
+        time.setText(formatTime(arrayList.get(position).getDateTime()));
 
         final ImageView btnArrow = (ImageView) convertView.findViewById(R.id.btn_arrow2);
 
@@ -96,5 +100,11 @@ public class ListTaskAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private String formatTime(String time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd/MM/yyyy");
+        Date date = new Date(Long.parseLong(time));
+        return simpleDateFormat.format(date);
     }
 }

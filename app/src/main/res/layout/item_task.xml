@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:orientation="horizontal"
-    android:background="@drawable/dialog_shape"
     android:layout_margin="5dp"
+    android:background="@drawable/dialog_shape"
+    android:orientation="horizontal"
     android:padding="5dp">
 
     <RelativeLayout
@@ -17,25 +17,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/task_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/task_title"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/deadline"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:text="Deadline:    "
             android:textSize="10sp"
-            android:text="Deadline:"
-            android:textStyle="italic"
+            android:textStyle="italic" />
 
-            />
+        <TextView
+            android:id="@+id/task_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/deadline"
+            android:layout_alignParentBottom="true"
+            android:textSize="10sp"
+            android:textStyle="italic"/>
 
     </RelativeLayout>
 
@@ -43,9 +51,9 @@
         android:id="@+id/btn_arrow2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="0.2"
-        android:src="@mipmap/ic_arrow"
-        android:layout_gravity="center_vertical"/>
+        android:src="@mipmap/ic_arrow" />
 
 
 </LinearLayout>
