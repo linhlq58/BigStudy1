@@ -266,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         mDialog.setCancelable(false);
 
         mDialog.show();

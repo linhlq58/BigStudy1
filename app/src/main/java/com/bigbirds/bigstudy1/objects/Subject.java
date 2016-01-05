@@ -3,6 +3,7 @@ package com.bigbirds.bigstudy1.objects;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Subject {
     private int id;
@@ -37,6 +38,15 @@ public class Subject {
             " )";
 
     public static String DELETE_SUBJECT_ENTRY = "DROP TABLE IF EXISTS Subject";
+
+    public static final int periods = 10;
+    public class SharedVariables{
+        public static final int MBeginningTime = 7;
+        public static final int MEndingTime = 12;
+        public static final int ABeginningTime = 13;
+        public static final int AEndingTime = 18;
+        public static final int BreakTime = 1;
+    }
 
     public int getId() {
         return id;
@@ -148,7 +158,7 @@ public class Subject {
 
     public static Subject getTheNearestSubject(ArrayList<Subject> subjects, int day, int period){
         Subject subject = null;
-        int s = 10;
+        int s = 13;
 
         for(Subject sub : subjects)
         {
@@ -166,7 +176,7 @@ public class Subject {
         Subject subject = null;
         int minDay = getMinDayOfWeek(subjects);
 
-        int minPeriod = 10;
+        int minPeriod = 13;
         for (Subject sub : subjects)
         {
             if (sub.dayOfWeek == minDay && minPeriod > sub.beginningPeriod)
@@ -212,7 +222,7 @@ public class Subject {
 
     public static Subject getTheSoonestSubject(ArrayList<Subject> subjects, int day) {
         Subject subject = null;
-        int minPeriod = 10;
+        int minPeriod = 13;
         for (Subject sub : subjects)
         {
             if (sub.dayOfWeek == day && minPeriod > sub.beginningPeriod)
@@ -221,6 +231,76 @@ public class Subject {
                 subject = sub;
             }
         }
+        return subject;
+    }
+
+    public static int getPeriodFromTime(int hour){
+        if ((hour >= SharedVariables.MBeginningTime && hour < SharedVariables.MEndingTime)
+                || (hour >= SharedVariables.ABeginningTime && hour < SharedVariables.AEndingTime))
+        {
+            if (hour < SharedVariables.MEndingTime)
+                return hour - SharedVariables.MBeginningTime + 1;
+            else
+                return hour - SharedVariables.MBeginningTime - SharedVariables.BreakTime + 1;
+        }
+        else
+        {
+            if (hour >= 0 && hour < SharedVariables.MBeginningTime)
+                return -1;
+            else
+            {
+                if (hour >= SharedVariables.MEndingTime && hour < SharedVariables.ABeginningTime)
+                    return 0;
+                else return Subject.periods + 1;
+            }
+        }
+    }
+
+    public static Subject getNextSubject(ArrayList<Subject> subjects) {
+        if (subjects.size() == 0)
+        {
+            return null;
+        }
+        Subject subject = null;
+        int period = getPeriodFromTime(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
+        if (period < 0)
+        {
+            subject = Subject.getTheSoonestSubject(subjects, day);
+        }
+        else
+        {
+            if (period == 0)
+            {
+                subject = Subject.getTheNearestSubject(subjects, day, 5);
+            }
+            else
+            {
+                if (period > Subject.periods)
+                {
+                    day++;
+                    if (day <= Subject.getMaxDayOfWeek(subjects))
+                        subject = Subject.getTheSoonestSubject(subjects, day);
+                }
+                else
+                    subject = Subject.getTheNearestSubject(subjects, day, period);
+            }
+        }
+
+        while (subject == null)
+        {
+            if (day > Subject.getMaxDayOfWeek(subjects))
+            {
+                subject = Subject.getTheSoonestSubjectInWeek(subjects);
+            }
+            else
+            {
+                day++;
+                subject = Subject.getTheSoonestSubject(subjects, day);
+            }
+        }
+
         return subject;
     }
 }

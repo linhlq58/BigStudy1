@@ -9,10 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.bigbirds.bigstudy1.objects.*;
 
 import java.sql.SQLDataException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
