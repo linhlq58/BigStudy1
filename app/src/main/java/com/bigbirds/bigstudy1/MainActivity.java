@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else {
                             if (DatabaseClassHelper.instance.getLastInsertedTeacherRowID() != null)
-                                newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID());
+                                newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID() + 1);
                             else newSubject.setTeacherID(1);
                         }
 
