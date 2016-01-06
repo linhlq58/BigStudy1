@@ -265,7 +265,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         
             while (!cursor.isAfterLast()){
-                subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
+                subjectIDs.add(new Integer(cursor.getInt(cursor.getColumnIndex("id"))));
             }
             cursor.close();
 
@@ -330,9 +330,9 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         try{
             cursor.moveToFirst();
-            ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
-            while (!cursor.isAfterLast()){
-                subjectIDs.add(cursor.getInt(cursor.getColumnIndex("id")));
+            ArrayList<Integer> subjectIDs = new ArrayList<>();
+            while (!cursor.isAfterLast()) {
+                subjectIDs.add(new Integer(cursor.getInt(cursor.getColumnIndex("id"))));
             }
             cursor.close();
             
