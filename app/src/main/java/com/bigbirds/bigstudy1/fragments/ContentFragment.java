@@ -31,7 +31,10 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.bigbirds.bigstudy1.DatabaseClassHelper;
 import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.R;
+import com.bigbirds.bigstudy1.adapters.ListTaskAdapter;
+import com.bigbirds.bigstudy1.objects.Note;
 import com.bigbirds.bigstudy1.objects.Subject;
+import com.bigbirds.bigstudy1.objects.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +61,11 @@ public class ContentFragment extends Fragment {
 
     private ArrayList<Subject> subjectArr;
 
+    private TextView mainNoteSubjectName, mainNoteContent;
+    private TextView mainTaskSubjectName, mainTaskTitle;
+
+    private Button completeBtn;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +86,13 @@ public class ContentFragment extends Fragment {
         scrollNote = (ScrollView) view.findViewById(R.id.scroll_note);
         scrollTask = (ScrollView) view.findViewById(R.id.scroll_task);
 
-        TextView mainNoteSubjectName = (TextView) view.findViewById(R.id.main_note_subject_name);
-        TextView mainNoteTittle = (TextView) view.findViewById(R.id.main_note_title);
-        TextView mainNoteContent = (TextView) view.findViewById(R.id.main_note_content);
+        mainNoteSubjectName = (TextView) view.findViewById(R.id.main_note_subject_name);
+        mainNoteContent = (TextView) view.findViewById(R.id.main_note_content);
+
+        mainTaskSubjectName = (TextView) view.findViewById(R.id.main_task_subject_name);
+        mainTaskTitle = (TextView) view.findViewById(R.id.main_task_title);
+
+        completeBtn = (Button) view.findViewById(R.id.complete_btn);
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
@@ -115,18 +127,20 @@ public class ContentFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
 
+                        Subject currentSubject = DatabaseClassHelper.instance.getSubjectById(subjectId);
+
                         switch (id) {
                             case R.id.subject_edit:
+
                                 ((MainActivity) getActivity()).showSubjectDialog(true,
-                                        subjectArr.get(subjectId),
-                                        DatabaseClassHelper.instance.getTeacherById(subjectArr.get(subjectId).getTeacherID()));
+                                        currentSubject, DatabaseClassHelper.instance.getTeacherById(currentSubject.getTeacherID()));
 
                                 mWeekView.notifyDatasetChanged();
 
                                 return true;
                             case R.id.subject_delete:
                                 try {
-                                    DatabaseClassHelper.instance.delete(subjectArr.get(subjectId));
+                                    DatabaseClassHelper.instance.delete(currentSubject);
                                 } catch (Exception e) {
                                     Toast.makeText(getActivity(), "Có lỗi khi xóa",
                                             Toast.LENGTH_SHORT).show();
@@ -165,6 +179,44 @@ public class ContentFragment extends Fragment {
 
     @Override
     public void onResume() {
+
+        Subject nextSubject = Subject.getNextSubject(DatabaseClassHelper.instance.getSubjects(2016, 1));
+
+        ArrayList<Task> taskArr = DatabaseClassHelper.instance.getTasksInAWeek(2016, 1);
+
+        ArrayList<Note> noteArr = DatabaseClassHelper.instance.getNotesBySubjectID(nextSubject.getId());
+
+        mainNoteSubjectName.setText(nextSubject.getName());
+
+        if (noteArr.size() > 0) {
+            String s = new String();
+
+            for (int i = 0; i<noteArr.size(); i++) {
+                s = s + "- " + noteArr.get(i).getContent() + "\n";
+            }
+
+            mainNoteContent.setText(s);
+        } else {
+            mainNoteContent.setText("Không có ghi chú nào cho môn học sắp tới");
+        }
+
+        if (taskArr.size() > 0) {
+
+            Task nearestTask = taskArr.get(0);
+
+            mainTaskSubjectName.setText(DatabaseClassHelper.instance.getSubjectById(nearestTask.getSubjectID()).getName());
+
+            String str = ListTaskAdapter.formatTime(nearestTask.getDateTime());
+
+            mainTaskTitle.setText(nearestTask.getTitle() + "\n" + str);
+
+            completeBtn.setClickable(true);
+        } else {
+            mainTaskTitle.setText("Không có nhiệm vụ nào gần đây");
+
+            completeBtn.setClickable(false);
+        }
+
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
@@ -208,12 +260,12 @@ public class ContentFragment extends Fragment {
 
                     if (subjectArr.get(i).getTeacherID() != null
                             && subjectArr.get(i).getTeacherID() > 0) {
-                        WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                        WeekViewEvent event = new WeekViewEvent(subjectArr.get(i).getId(), subjectArr.get(i).getName() + "\n",
                                 subjectArr.get(i).getPlace() + "\n" + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()).getName(), startTime, endTime);
                         event.setColor(getResources().getColor(colorArr[i % 10]));
                         events.add(event);
                     } else {
-                        WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                        WeekViewEvent event = new WeekViewEvent(subjectArr.get(i).getId(), subjectArr.get(i).getName() + "\n",
                                 subjectArr.get(i).getPlace(), startTime, endTime);
                         event.setColor(getResources().getColor(colorArr[i % 10]));
                         events.add(event);

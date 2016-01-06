@@ -178,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
 
                         newNote.setTitle(noteTitle.getText().toString());
                         newNote.setContent(noteContent.getText().toString());
-                        newNote.setSubjectID(noteSpinner.getSelectedItemPosition());
+                        newNote.setSubjectID(((Subject)noteSpinner.getSelectedItem()).getId());
 
                         DataHandler.saveNote(newNote, isEdited);
                     } else {
                         note.setTitle(noteTitle.getText().toString());
                         note.setContent(noteContent.getText().toString());
-                        note.setSubjectID(noteSpinner.getSelectedItemPosition());
+                        note.setSubjectID(((Subject)noteSpinner.getSelectedItem()).getId());
 
                         DataHandler.saveNote(note, isEdited);
 
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
 
                         newTask.setTitle(taskTitle.getText().toString());
                         newTask.setContent(taskContent.getText().toString());
-                        newTask.setSubjectID(taskSpinner.getSelectedItemPosition());
+                        newTask.setSubjectID(((Subject)taskSpinner.getSelectedItem()).getId());
                         newTask.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(newTask, isEdited);
@@ -451,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
 
                         task.setTitle(taskTitle.getText().toString());
                         task.setContent(taskContent.getText().toString());
-                        task.setSubjectID(taskSpinner.getSelectedItemPosition());
+                        task.setSubjectID(((Subject)taskSpinner.getSelectedItem()).getId());
                         task.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(task, isEdited);
@@ -502,15 +502,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTaskSpinner() {
-        ArrayList<String> spinnerArr = new ArrayList<>();
+        ArrayList<Subject> spinnerArr = new ArrayList<>();
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
         for (int i=0; i<subjectArr.size(); i++) {
-            spinnerArr.add(subjectArr.get(i).getName());
+            spinnerArr.add(subjectArr.get(i));
         }
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<Subject> spinnerAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerArr);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -522,15 +522,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDocumentSpinner() {
-        ArrayList<String> spinnerArr = new ArrayList<>();
+        ArrayList<Subject> spinnerArr = new ArrayList<>();
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
         for (int i=0; i<subjectArr.size(); i++) {
-            spinnerArr.add(subjectArr.get(i).getName());
+            spinnerArr.add(subjectArr.get(i));
         }
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<Subject> spinnerAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerArr);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -604,15 +604,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNoteSpinner() {
-        ArrayList<String> spinnerArr = new ArrayList<>();
+        ArrayList<Subject> spinnerArr = new ArrayList<>();
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
             for (int i = 0; i < subjectArr.size(); i++) {
-                spinnerArr.add(subjectArr.get(i).getName());
+                spinnerArr.add(subjectArr.get(i));
             }
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<Subject> spinnerAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerArr);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);

@@ -102,7 +102,7 @@ public class ListTaskAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String formatTime(String time) {
+    public static String formatTime(String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd/MM/yyyy");
         Date date = new Date(Long.parseLong(time));
         return simpleDateFormat.format(date);

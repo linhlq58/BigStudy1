@@ -32,6 +32,59 @@
         />
 
     <ScrollView
+        android:id="@+id/scroll_task"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"
+        android:background="@drawable/dialog_shape"
+        android:padding="5dp"
+        android:layout_margin="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false">
+
+            <TextView
+                android:id="@+id/main_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:text="NHIỆM VỤ SẮP TỚI"
+                android:drawableLeft="@mipmap/ic_task"/>
+
+            <TextView
+                android:id="@+id/main_task_subject_name"
+                android:layout_below="@+id/main_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/main_task_title"
+                android:layout_below="@+id/main_task_subject_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/complete_btn"
+                android:background="@drawable/button_shape"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:text="Đã hoàn thành"
+                android:textSize="10sp"
+                android:textColor="#c6e2ff"
+                 />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <ScrollView
         android:id="@+id/scroll_note"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:text="GHI CHÚ GẦN ĐÂY"
+                android:text="GHI CHÚ MÔN TIẾP THEO"
                 android:layout_gravity="center_horizontal"
                 android:drawableLeft="@mipmap/ic_note"/>
 
@@ -60,47 +113,11 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 />
-            
-            <TextView
-                android:id="@+id/main_note_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold|italic"/>
 
             <TextView
                 android:id="@+id/main_note_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <ScrollView
-        android:id="@+id/scroll_task"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:background="@drawable/dialog_shape"
-        android:padding="5dp"
-        android:layout_margin="5dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:clickable="false">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
-                android:text="NHIỆM VỤ SẮP TỚi"
-                android:drawableLeft="@mipmap/ic_task"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="- Nhậu với Dũng Dê \n- Solo PES với Sơn Dầu \n- Đón con trai hộ Hùng Đụt \n- Hoàn thành xong dự án củ chuối cùng Team BigBirds \n- Đặt mua thêm 2 căn biệt thự tại khu Hồ Tây\n- Đầu tư thêm 200.000$ vào sàn giao dịch"/>
 
         </LinearLayout>
 
