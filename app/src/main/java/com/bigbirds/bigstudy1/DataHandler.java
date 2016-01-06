@@ -110,6 +110,20 @@ public class DataHandler {
         else return false;
     }
 
+    public static boolean saveTeacher(Teacher teacher) {
+        if (teacher == null)
+            return false;
+        try{
+            DatabaseClassHelper.instance.update(teacher);
+        }
+        catch (Exception e){
+            return false;
+        }
+
+        return true;
+
+    }
+
     public static boolean saveNote(Note note, boolean isEdited) {
         if (note == null)
             return false;

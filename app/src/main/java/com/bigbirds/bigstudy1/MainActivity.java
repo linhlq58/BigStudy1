@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -198,7 +199,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(true);
+
+        mDialog.show();
+    }
+
+    public void showTeacherDialog(final Teacher teacher) {
+        mDialog = new Dialog(MainActivity.this);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mDialog.setContentView(R.layout.teacher_info);
+
+        Button saveButton = (Button) mDialog.findViewById(R.id.teacher_save_button);
+        Button cancelButton = (Button) mDialog.findViewById(R.id.teacher_cancel_button);
+
+        final TextView name = (TextView) mDialog.findViewById(R.id.teacher_name);
+        final EditText phoneNumber = (EditText) mDialog.findViewById(R.id.edit_teacher_phone);
+        final EditText room = (EditText) mDialog.findViewById(R.id.edit_teacher_room);
+        final EditText other = (EditText) mDialog.findViewById(R.id.edit_teacher_other);
+
+        name.setText(teacher.getName());
+        phoneNumber.setText(teacher.getPhone());
+        room.setText(teacher.getRoom());
+        other.setText(teacher.getOtherInfo());
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                teacher.setPhone(phoneNumber.getText().toString());
+                teacher.setRoom(room.getText().toString());
+                teacher.setOtherInfo(other.getText().toString());
+
+                DataHandler.saveTeacher(teacher);
+
+                mDialog.dismiss();
+
+            }
+        });
+
+        mDialog.setCancelable(true);
 
         mDialog.show();
     }
@@ -319,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(true);
 
         mDialog.show();
     }
@@ -421,7 +468,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(true);
 
         mDialog.show();
     }
@@ -447,7 +494,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mDialog.setCancelable(false);
+        mDialog.setCancelable(true);
 
         mDialog.show();
     }

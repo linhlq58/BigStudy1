@@ -139,6 +139,7 @@ public class ContentFragment extends Fragment {
 
                                 return true;
                             case R.id.subject_info:
+                                ((MainActivity) getActivity()).showTeacherDialog(DatabaseClassHelper.instance.getTeacherById(subjectArr.get(subjectId).getTeacherID()));
                                 return true;
                         }
                         return false;
