@@ -231,7 +231,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
     public ArrayList<Note> getNotesBySubjectID(int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, "id desc");
+        Cursor cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{Integer.toString(id)}, null, null, null);
         ArrayList<Note> res = new ArrayList<Note>();
 
         try{
