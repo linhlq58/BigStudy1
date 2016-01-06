@@ -309,9 +309,11 @@ public class MainActivity extends AppCompatActivity {
                             newSubject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
                         }
                         else {
-                            if (DatabaseClassHelper.instance.getLastInsertedTeacherRowID() != null)
-                                newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID() + 1);
-                            else newSubject.setTeacherID(1);
+                            if (!isEmpty(teacherName)){
+                                if (DatabaseClassHelper.instance.getLastInsertedTeacherRowID() != null)
+                                    newSubject.setTeacherID(DatabaseClassHelper.instance.getLastInsertedTeacherRowID() + 1);
+                                else newSubject.setTeacherID(1);
+                            }
                         }
 
                         newSubject.setDayOfWeek(formatDayOfWeek(subjectSpinner4.getSelectedItem().toString()));
