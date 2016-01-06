@@ -73,14 +73,5 @@ public class SubjectFragment extends Fragment {
 
         tabs.setViewPager(pager);
 
-        Button okBtn = (Button) view.findViewById(R.id.ok_button);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, new ContentFragment());
-                transaction.commit();
-            }
-        });
     }
 }

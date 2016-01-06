@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -70,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         itemMenus = new ArrayList<>();
 
+        subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         listView = (ListView) findViewById(R.id.menu_list);
@@ -90,13 +93,28 @@ public class MainActivity extends AppCompatActivity {
                                 showSubjectDialog(false, null, null);
                                 return true;
                             case R.id.addNote:
-                                showNoteDialog(false, null);
+                                if (subjectArr.size() > 0) {
+                                    showNoteDialog(false, null);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Bạn chưa có môn học nào",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 return true;
                             case R.id.addTask:
-                                showTaskDialog(false, null);
+                                if (subjectArr.size() > 0) {
+                                    showTaskDialog(false, null);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Bạn chưa có môn học nào",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 return true;
                             case R.id.addDocument:
-                                showDocumentDialog();
+                                if (subjectArr.size() > 0) {
+                                    showDocumentDialog();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Bạn chưa có môn học nào",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                                 return true;
                             default:
                                 return false;
@@ -212,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
             name.setText(subject.getName());
             location.setText(subject.getPlace());
             subjectSpinner3.setSelection(subject.getTeacherID());
-            subjectSpinner4.setSelection(subject.getDayOfWeek()-1);
+            subjectSpinner4.setSelection(subject.getDayOfWeek() - 1);
             subjectSpinner1.setSelection(subject.getBeginningPeriod()-1);
-            subjectSpinner2.setSelection(subject.getEndingPeriod()-1);
+            subjectSpinner2.setSelection(subject.getEndingPeriod() - 1);
         }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -271,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
                         subject.setPlace(location.getText().toString());
 
                         if (subjectSpinner3.getSelectedItem().toString() != "<None>") {
+                            Log.e("test", "aaaa");
                             subject.setTeacherID(subjectSpinner3.getSelectedItemPosition());
                         }
 
@@ -538,9 +557,9 @@ public class MainActivity extends AppCompatActivity {
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
 
-        for (int i=0; i<subjectArr.size(); i++) {
-            spinnerArr.add(subjectArr.get(i).getName());
-        }
+            for (int i = 0; i < subjectArr.size(); i++) {
+                spinnerArr.add(subjectArr.get(i).getName());
+            }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item, spinnerArr);

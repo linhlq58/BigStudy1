@@ -48,13 +48,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:text="GHI CHÚ HÔM NAY"
+                android:text="GHI CHÚ GẦN ĐÂY"
+                android:layout_gravity="center_horizontal"
                 android:drawableLeft="@mipmap/ic_note"/>
 
             <TextView
+                android:id="@+id/main_note_subject_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="- Dũng Dê được tăng lương \n- Hùng đụt mới mua Lamborghini \n- Sơn dầu có bồ mới"/>
+                android:textStyle="bold"
+                />
+            
+            <TextView
+                android:id="@+id/main_note_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"/>
+
+            <TextView
+                android:id="@+id/main_note_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -78,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                android:text="NHIỆM VỤ HÔM NAY"
+                android:text="NHIỆM VỤ SẮP TỚi"
                 android:drawableLeft="@mipmap/ic_task"/>
 
             <TextView

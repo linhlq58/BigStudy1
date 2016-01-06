@@ -4,6 +4,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -41,6 +43,7 @@ public class ContentFragment extends Fragment {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
+
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
 
     private WeekView mWeekView;
@@ -50,6 +53,8 @@ public class ContentFragment extends Fragment {
     private MainActivity context;
 
     private ArrayList<Subject> subjectArr;
+
+    private MainActivity mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,10 @@ public class ContentFragment extends Fragment {
         scrollNote = (ScrollView) view.findViewById(R.id.scroll_note);
         scrollTask = (ScrollView) view.findViewById(R.id.scroll_task);
 
+        TextView mainNoteSubjectName = (TextView) view.findViewById(R.id.main_note_subject_name);
+        TextView mainNoteTittle = (TextView) view.findViewById(R.id.main_note_title);
+        TextView mainNoteContent = (TextView) view.findViewById(R.id.main_note_content);
+
         subjectArr = new ArrayList<>();
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
@@ -79,8 +88,6 @@ public class ContentFragment extends Fragment {
                 R.color.event_color_04, R.color.event_color_05, R.color.event_color_06,
                 R.color.event_color_07, R.color.event_color_08, R.color.event_color_09,
                 R.color.event_color_10};
-
-        //((MainActivity) getActivity()).subjectDialog
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
@@ -95,6 +102,7 @@ public class ContentFragment extends Fragment {
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.container, subjectFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -156,34 +164,52 @@ public class ContentFragment extends Fragment {
 
                 List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
 
-                for (int i=0; i<subjectArr.size(); i++) {
+                for (int i = 0; i < subjectArr.size(); i++) {
                     Calendar startTime = Calendar.getInstance();
                     startTime.set(Calendar.DAY_OF_WEEK, subjectArr.get(i).getDayOfWeek());
-                    startTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getBeginningPeriod() - 1);
+
+                    if (subjectArr.get(i).getBeginningPeriod() >= 1
+                            && subjectArr.get(i).getBeginningPeriod() <= 5) {
+                        startTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getBeginningPeriod() - 1 + 7);
+                    } else if (subjectArr.get(i).getBeginningPeriod() >= 6
+                            && subjectArr.get(i).getBeginningPeriod() <= 10) {
+                        startTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getBeginningPeriod() - 1 + 8);
+                    }
+
                     startTime.set(Calendar.MINUTE, 0);
                     startTime.set(Calendar.MONTH, newMonth - 1);
                     startTime.set(Calendar.YEAR, newYear);
                     Calendar endTime = (Calendar) startTime.clone();
-                    endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod());
+
+                    if (subjectArr.get(i).getEndingPeriod() >= 1
+                            && subjectArr.get(i).getEndingPeriod() <= 5) {
+                        endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod() + 7);
+                    } else if (subjectArr.get(i).getEndingPeriod() >= 6
+                            && subjectArr.get(i).getEndingPeriod() <= 10) {
+                        endTime.set(Calendar.HOUR_OF_DAY, subjectArr.get(i).getEndingPeriod() + 8);
+                    }
+
                     endTime.set(Calendar.MONTH, newMonth - 1);
 
-
-                    WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
-                            subjectArr.get(i).getPlace() + "\n" + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()).getName(), startTime, endTime);
-                    event.setColor(getResources().getColor(colorArr[i % 10]));
-                    events.add(event);
-
-                    /*WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
-                            subjectArr.get(i).getPlace(), startTime, endTime);
-                    event.setColor(getResources().getColor(colorArr[i % 10]));
-                    events.add(event);*/
-
-
+                    if (subjectArr.get(i).getTeacherID() != null
+                            && subjectArr.get(i).getTeacherID() > 0) {
+                        WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                                subjectArr.get(i).getPlace() + "\n" + DatabaseClassHelper.instance.getTeacherById(subjectArr.get(i).getTeacherID()).getName(), startTime, endTime);
+                        event.setColor(getResources().getColor(colorArr[i % 10]));
+                        events.add(event);
+                    } else {
+                        WeekViewEvent event = new WeekViewEvent(i, subjectArr.get(i).getName() + "\n",
+                                subjectArr.get(i).getPlace(), startTime, endTime);
+                        event.setColor(getResources().getColor(colorArr[i % 10]));
+                        events.add(event);
+                    }
                 }
 
                 return events;
             }
         });
+
+        mWeekView.goToHour(7);
 
         mWeekView.notifyDatasetChanged();
 
@@ -210,25 +236,27 @@ public class ContentFragment extends Fragment {
             public String interpretTime(int hour) {
                 //return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
                 switch (hour) {
-                    case 0:
-                        return "Tiết 1";
-                    case 1:
-                        return "Tiết 2";
-                    case 2:
-                        return "Tiết 3";
-                    case 3:
-                        return "Tiết 4";
-                    case 4:
-                        return "Tiết 5";
-                    case 5:
-                        return "Tiết 6";
-                    case 6:
-                        return "Tiết 7";
                     case 7:
-                        return "Tiết 8";
+                        return "Tiết 1";
                     case 8:
-                        return "Tiết 9";
+                        return "Tiết 2";
                     case 9:
+                        return "Tiết 3";
+                    case 10:
+                        return "Tiết 4";
+                    case 11:
+                        return "Tiết 5";
+                    case 12:
+                        return "BREAK";
+                    case 13:
+                        return "Tiết 6";
+                    case 14:
+                        return "Tiết 7";
+                    case 15:
+                        return "Tiết 8";
+                    case 16:
+                        return "Tiết 9";
+                    case 17:
                         return "Tiết 10";
                     default:
                         return "";
@@ -259,6 +287,7 @@ public class ContentFragment extends Fragment {
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(1);
+                    mWeekView.goToHour(7);
 
                     // Lets change some dimensions to best fit the view.
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
@@ -272,6 +301,7 @@ public class ContentFragment extends Fragment {
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_THREE_DAY_VIEW;
                     mWeekView.setNumberOfVisibleDays(3);
+                    mWeekView.goToHour(7);
 
                     // Lets change some dimensions to best fit the view.
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
@@ -285,6 +315,7 @@ public class ContentFragment extends Fragment {
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_WEEK_VIEW;
                     mWeekView.setNumberOfVisibleDays(7);
+                    mWeekView.goToHour(7);
 
                     // Lets change some dimensions to best fit the view.
                     mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
