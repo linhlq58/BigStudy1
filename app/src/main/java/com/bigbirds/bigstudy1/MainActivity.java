@@ -310,7 +310,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    updateUI();
+                    Intent intent = new Intent();
+                    intent.setAction("updateUISubject");
+                    MainActivity.this.sendBroadcast(intent);
 
                     mDialog.dismiss();
                 }

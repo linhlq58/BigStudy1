@@ -1,5 +1,9 @@
 package com.bigbirds.bigstudy1.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -54,8 +58,6 @@ public class ContentFragment extends Fragment {
 
     private ArrayList<Subject> subjectArr;
 
-    private MainActivity mainActivity;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +81,6 @@ public class ContentFragment extends Fragment {
         TextView mainNoteSubjectName = (TextView) view.findViewById(R.id.main_note_subject_name);
         TextView mainNoteTittle = (TextView) view.findViewById(R.id.main_note_title);
         TextView mainNoteContent = (TextView) view.findViewById(R.id.main_note_content);
-
-        subjectArr = new ArrayList<>();
-
-        subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
-
-        final int[] colorArr = {R.color.event_color_01, R.color.event_color_02, R.color.event_color_03,
-                R.color.event_color_04, R.color.event_color_05, R.color.event_color_06,
-                R.color.event_color_07, R.color.event_color_08, R.color.event_color_09,
-                R.color.event_color_10};
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
@@ -130,7 +123,6 @@ public class ContentFragment extends Fragment {
 
                                 mWeekView.notifyDatasetChanged();
 
-                                ((MainActivity) getActivity()).updateUI();
                                 return true;
                             case R.id.subject_delete:
                                 try {
@@ -141,7 +133,9 @@ public class ContentFragment extends Fragment {
                                 }
                                 mWeekView.notifyDatasetChanged();
 
-                                ((MainActivity) getActivity()).updateUI();
+                                Intent intent = new Intent();
+                                intent.setAction("updateUISubject");
+                                ((MainActivity) getActivity()).sendBroadcast(intent);
 
                                 return true;
                             case R.id.subject_info:
@@ -157,6 +151,26 @@ public class ContentFragment extends Fragment {
         });
 
         mWeekView.setFirstDayOfWeek(Calendar.MONDAY);
+
+        IntentFilter filter = new IntentFilter("updateUISubject");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onResume();
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    public void onResume() {
+
+        subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
+
+        final int[] colorArr = {R.color.event_color_01, R.color.event_color_02, R.color.event_color_03,
+                R.color.event_color_04, R.color.event_color_05, R.color.event_color_06,
+                R.color.event_color_07, R.color.event_color_08, R.color.event_color_09,
+                R.color.event_color_10};
 
         mWeekView.setMonthChangeListener(new MonthLoader.MonthChangeListener() {
             @Override
@@ -214,6 +228,8 @@ public class ContentFragment extends Fragment {
         mWeekView.notifyDatasetChanged();
 
         setupDateTimeInterpreter(false);
+
+        super.onResume();
     }
 
     private void setupDateTimeInterpreter(final boolean shortDate) {
