@@ -330,14 +330,15 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         try{
             cursor.moveToFirst();
-            ArrayList<Integer> subjectIDs = new ArrayList<>();
+            int[] subjectIDs = new int[10];
+            int length = 0;
             while (!cursor.isAfterLast()) {
-                subjectIDs.add(new Integer(cursor.getInt(cursor.getColumnIndex("id"))));
+                subjectIDs[length++] = cursor.getInt(cursor.getColumnIndex("id"));
             }
             cursor.close();
-            
-            for (Integer i : subjectIDs){
-                cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+
+            for (int i = 0; i < length; i++){
+                cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String(subjectIDs[length]), null, null, null);
 
                 try{
                     while (!cursor.isAfterLast()){
