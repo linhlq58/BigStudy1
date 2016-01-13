@@ -330,7 +330,7 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         try{
             cursor.moveToFirst();
-            int[] subjectIDs = new int[10];
+            int[] subjectIDs = new int[50];
             int length = 0;
             while (!cursor.isAfterLast()) {
                 subjectIDs[length++] = cursor.getInt(cursor.getColumnIndex("id"));
