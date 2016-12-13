@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.alamkanak.weekview.WeekView;
 import com.bigbirds.bigstudy1.adapters.ListMenuAdapter;
 import com.bigbirds.bigstudy1.fragments.ContentFragment;
+import com.bigbirds.bigstudy1.objects.Document;
 import com.bigbirds.bigstudy1.objects.ItemMenu;
 import com.bigbirds.bigstudy1.objects.Note;
 import com.bigbirds.bigstudy1.objects.Subject;
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             case R.id.addDocument:
                                 if (subjectArr.size() > 0) {
-                                    showDocumentDialog();
+                                    showDocumentDialog(false, null);
                                 } else {
                                     Toast.makeText(MainActivity.this, "Bạn chưa có môn học nào",
                                             Toast.LENGTH_SHORT).show();
@@ -436,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
 
                         newTask.setTitle(taskTitle.getText().toString());
                         newTask.setContent(taskContent.getText().toString());
-                        newTask.setSubjectID(((Subject)taskSpinner.getSelectedItem()).getId());
+                        newTask.setSubjectID(((Subject) taskSpinner.getSelectedItem()).getId());
                         newTask.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(newTask, isEdited);
@@ -451,7 +452,7 @@ public class MainActivity extends AppCompatActivity {
 
                         task.setTitle(taskTitle.getText().toString());
                         task.setContent(taskContent.getText().toString());
-                        task.setSubjectID(((Subject)taskSpinner.getSelectedItem()).getId());
+                        task.setSubjectID(((Subject) taskSpinner.getSelectedItem()).getId());
                         task.setDateTime(calendar.getTimeInMillis() + "");
 
                         DataHandler.saveTask(task, isEdited);
@@ -475,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
         mDialog.show();
     }
 
-    private void showDocumentDialog() {
+    public void showDocumentDialog(final boolean isEdited, final Document document) {
         mDialog = new Dialog(MainActivity.this);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -484,9 +485,20 @@ public class MainActivity extends AppCompatActivity {
         Button saveButton = (Button) mDialog.findViewById(R.id.document_save_button);
         Button cancelButton = (Button) mDialog.findViewById(R.id.document_cancel_button);
 
+        final EditText documentTitle = (EditText) mDialog.findViewById(R.id.edit_document_title);
+        final EditText documentFile = (EditText) mDialog.findViewById(R.id.edit_document_file);
+
         documentSpinner = (Spinner) mDialog.findViewById(R.id.document_spinner);
 
         initDocumentSpinner();
+
+        if (isEdited == true) {
+            documentTitle.setText(document.getTitle().toString());
+            documentFile.setText(document.getLink().toString());
+            documentSpinner.setSelection(document.getSubjectID());
+
+            documentSpinner.setEnabled(false);
+        }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -495,6 +507,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isEmpty(documentTitle) || isEmpty(documentFile)) {
+                    Toast.makeText(MainActivity.this,
+                            "Bạn nhập thiếu thông tin hoặc sai yêu cầu!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (isEdited == false) {
+                        Document newDocument = new Document();
+
+                        newDocument.setTitle(documentTitle.getText().toString());
+                        newDocument.setLink(documentFile.getText().toString());
+                        newDocument.setDescription("Miêu tả tài liệu");
+                        newDocument.setSubjectID(((Subject)documentSpinner.getSelectedItem()).getId());
+
+                        DataHandler.saveDocument(newDocument, isEdited);
+                    } else {
+                        document.setTitle(documentTitle.getText().toString());
+                        document.setLink(documentFile.getText().toString());
+                        document.setDescription("Miêu tả tài liệu");
+                        document.setSubjectID(((Subject) documentSpinner.getSelectedItem()).getId());
+
+                        DataHandler.saveDocument(document, isEdited);
+
+                    }
+
+                    Intent intent = new Intent();
+                    intent.setAction("updateUIDocumentFragment");
+                    MainActivity.this.sendBroadcast(intent);
+
+                    mDialog.dismiss();
+                }
+            }
+        });
 
         mDialog.setCancelable(true);
 

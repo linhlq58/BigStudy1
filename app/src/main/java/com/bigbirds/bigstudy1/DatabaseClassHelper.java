@@ -254,46 +254,55 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<Note> getNotesByDay(int dayOfWeek, int year, int semester){
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("Subject", Subject.PROPERTIES, "dayOfWeek=? and year=? and semester=?",
-                new String[]{Integer.toString(dayOfWeek), Integer.toString(year), Integer.toString(semester)}, null, null, null);
-        
-        ArrayList<Note> res = new ArrayList<Note>();
-        try{
-            ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
-            cursor.moveToFirst();
-        
-            while (!cursor.isAfterLast()){
-                subjectIDs.add(new Integer(cursor.getInt(cursor.getColumnIndex("id"))));
-            }
-            cursor.close();
+    public ArrayList<Note> getNotesByDay(int dayOfWeek){
+        ArrayList<Note> listNote = new ArrayList<>();
 
-            
-            for (Integer i : subjectIDs){
-                cursor = db.query("Note", Note.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
+        String query = "SELECT * FROM Note n JOIN Subject s WHERE n.subjectId = s.id AND s.dayOfWeek = " + dayOfWeek;
 
-                try{
-                    cursor.moveToFirst();
-                    while (!cursor.isAfterLast()){
-                        Note note = new Note();
-                        note.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                        note.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                        note.setContent(cursor.getString(cursor.getColumnIndex("content")));
-                        note.setSubjectID(cursor.getInt(cursor.getColumnIndex("subjectID")));
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
 
-                        res.add(note);
-                        cursor.moveToNext();
-                    }
-                    cursor.close();
-                }
-                catch(Exception e){}
-            }
+        if (cursor.moveToFirst()) {
+            do {
+                Note note = new Note();
+                note.setId(cursor.getInt(0));
+                note.setTitle(cursor.getString(1));
+                note.setContent(cursor.getString(2));
+                note.setSubjectID(cursor.getInt(3));
+
+                listNote.add(note);
+            } while (cursor.moveToNext());
         }
-        catch(Exception e){}
 
-        db.close();
-        return res;
+        cursor.close();
+
+        return listNote;
+    }
+
+    public ArrayList<Task> getTasksByDay(int dayOfWeek){
+        ArrayList<Task> listTask = new ArrayList<>();
+
+        String query = "SELECT * FROM Task n JOIN Subject s WHERE n.subjectId = s.id AND s.dayOfWeek = " + dayOfWeek;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(cursor.getInt(0));
+                task.setTitle(cursor.getString(1));
+                task.setContent(cursor.getString(2));
+                task.setSubjectID(cursor.getInt(3));
+                task.setDateTime(cursor.getString(4));
+
+                listTask.add(task);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return listTask;
     }
 
     public ArrayList<Task> getTasksBySubjectID(int id){
@@ -330,15 +339,18 @@ public final class DatabaseClassHelper extends SQLiteOpenHelper {
 
         try{
             cursor.moveToFirst();
-            int[] subjectIDs = new int[50];
-            int length = 0;
-            while (!cursor.isAfterLast()) {
-                subjectIDs[length++] = cursor.getInt(cursor.getColumnIndex("id"));
+            ArrayList<Integer> subjectIDs = new ArrayList<Integer>();
+            while (!cursor.isAfterLast()){
+                Integer i = cursor.getInt(cursor.getColumnIndex("id"));
+                try{
+                    subjectIDs.add(i);
+                }
+                catch (Exception e){};
             }
             cursor.close();
-
-            for (int i = 0; i < length; i++){
-                cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String(subjectIDs[length]), null, null, null);
+            
+            for (Integer i : subjectIDs){
+                cursor = db.query("Task", Task.PROPERTIES, "subjectID=?", new String[]{i.toString()}, null, null, null);
 
                 try{
                     while (!cursor.isAfterLast()){

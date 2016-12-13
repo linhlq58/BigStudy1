@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,7 +32,9 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.bigbirds.bigstudy1.DatabaseClassHelper;
 import com.bigbirds.bigstudy1.MainActivity;
 import com.bigbirds.bigstudy1.R;
+import com.bigbirds.bigstudy1.adapters.ListNoteTextAdapter;
 import com.bigbirds.bigstudy1.adapters.ListTaskAdapter;
+import com.bigbirds.bigstudy1.adapters.ListTaskTextAdapter;
 import com.bigbirds.bigstudy1.objects.Note;
 import com.bigbirds.bigstudy1.objects.Subject;
 import com.bigbirds.bigstudy1.objects.Task;
@@ -61,7 +64,12 @@ public class ContentFragment extends Fragment {
 
     private ArrayList<Subject> subjectArr;
 
-    private TextView mainNoteSubjectName, mainNoteContent;
+    private ListView listNoteView;
+    private ListNoteTextAdapter noteAdapter;
+    private ArrayList<Note> listNoteByDay;
+    private ListView listTaskView;
+    private ListTaskTextAdapter taskAdapter;
+    private ArrayList<Task> listTaskByDay;
     private TextView mainTaskSubjectName, mainTaskTitle;
 
     private Button completeBtn;
@@ -86,13 +94,19 @@ public class ContentFragment extends Fragment {
         scrollNote = (ScrollView) view.findViewById(R.id.scroll_note);
         scrollTask = (ScrollView) view.findViewById(R.id.scroll_task);
 
-        mainNoteSubjectName = (TextView) view.findViewById(R.id.main_note_subject_name);
-        mainNoteContent = (TextView) view.findViewById(R.id.main_note_content);
+        listNoteView = (ListView) view.findViewById(R.id.list_note_text);
+        listTaskView = (ListView) view.findViewById(R.id.list_task_text);
 
-        mainTaskSubjectName = (TextView) view.findViewById(R.id.main_task_subject_name);
-        mainTaskTitle = (TextView) view.findViewById(R.id.main_task_title);
+        Calendar calendar = Calendar.getInstance();
 
-        completeBtn = (Button) view.findViewById(R.id.complete_btn);
+        listNoteByDay = DatabaseClassHelper.instance.getNotesByDay(calendar.get(Calendar.DAY_OF_WEEK));
+        listTaskByDay = DatabaseClassHelper.instance.getTasksByDay(calendar.get(Calendar.DAY_OF_WEEK));
+
+        noteAdapter = new ListNoteTextAdapter(getActivity(), R.layout.item_note_text, listNoteByDay);
+        listNoteView.setAdapter(noteAdapter);
+
+        taskAdapter = new ListTaskTextAdapter(getActivity(), R.layout.item_task_text, listTaskByDay);
+        listTaskView.setAdapter(taskAdapter);
 
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
@@ -180,11 +194,11 @@ public class ContentFragment extends Fragment {
     @Override
     public void onResume() {
 
-        Subject nextSubject = Subject.getNextSubject(DatabaseClassHelper.instance.getSubjects(2016, 1));
+        //Subject nextSubject = Subject.getNextSubject(DatabaseClassHelper.instance.getSubjects(2016, 1));
 
-        ArrayList<Task> taskArr = DatabaseClassHelper.instance.getTasksInAWeek(2016, 1);
+        //ArrayList<Task> taskArr = DatabaseClassHelper.instance.getTasksInAWeek(2016, 1);
 
-        ArrayList<Note> noteArr = DatabaseClassHelper.instance.getNotesBySubjectID(nextSubject.getId());
+        /*ArrayList<Note> noteArr = DatabaseClassHelper.instance.getNotesBySubjectID(nextSubject.getId());
 
         mainNoteSubjectName.setText(nextSubject.getName());
 
@@ -198,9 +212,9 @@ public class ContentFragment extends Fragment {
             mainNoteContent.setText(s);
         } else {
             mainNoteContent.setText("Không có ghi chú nào cho môn học sắp tới");
-        }
+        }*/
 
-        if (taskArr.size() > 0) {
+        /*if (taskArr.size() > 0) {
 
             Task nearestTask = taskArr.get(0);
 
@@ -215,7 +229,7 @@ public class ContentFragment extends Fragment {
             mainTaskTitle.setText("Không có nhiệm vụ nào gần đây");
 
             completeBtn.setClickable(false);
-        }
+        }*/
 
 
         subjectArr = DatabaseClassHelper.instance.getSubjects(2016, 1);
